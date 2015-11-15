@@ -1,0 +1,10 @@
+# Ignore bundler config.
+/.bundle
+
+-*.rbc
+-.rspec
+-/spec/tmp
+-**.orig
+-rerun.txt
+
+.DS_Store
