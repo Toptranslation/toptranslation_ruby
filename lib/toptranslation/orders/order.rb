@@ -2,7 +2,7 @@ module Toptranslation
   class Order
     attr_reader :identifier, :state, :created_at,
                 :requested_at, :ordered_at, :estimated_delivery_date,
-                :creator_hash
+                :creator_hash, :progress, :order_number
     attr_accessor :name, :reference, :comment, :coupon_code
 
     def initialize(connection, options={})
@@ -77,6 +77,8 @@ module Toptranslation
       @name = response['name'] if response['name']
       @reference = response['reference'] if response['reference']
       @comment = response['comment'] if response['comment']
+      @progress = response['progress_in_percent'] if response['progress_in_percent']
+      @order_number = response['order_number'] if response['order_number']
     end
 
     def remote_hash

@@ -1,6 +1,6 @@
 module Toptranslation
   class Translation
-    attr_reader :identifier, :filename, :mime_type, :updated_at, :created_at,
+    attr_reader :identifier, :filename, :filesize, :mime_type, :updated_at, :created_at,
                 :progress
 
     def initialize(connection, options={})
