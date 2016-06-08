@@ -12,17 +12,21 @@ module Toptranslation
       update_from_response(options)
     end
 
-    def add_document(filepath, source_locale_code, target_locale_codes)
-      upload = Upload.new(@connection).upload(filepath)
-
+    def add_document(document_store_id, document_token, source_locale_code, target_locale_codes)
       response = @connection.post("/orders/#{ identifier }/documents", {
-        document_store_id: upload.document_store_id,
-        document_token: upload.document_token,
+        document_store_id: document_store_id,
+        document_token: document_token,
         locale_code: source_locale_code,
         target_locale_codes: target_locale_codes
       })
 
       update_from_response(response)
+    end
+
+    def upload_document(filepath, source_locale_code, target_locale_codes)
+      upload = Upload.new(@connection).upload(filepath)
+
+      add_document(upload.document_store_id, upload.document_token, source_locale_code, target_locale_codes)
     end
 
     def quotes

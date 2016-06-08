@@ -32,7 +32,7 @@ order = client.orders.find('order_identifier') #=> An order
 Add document to an order
 
 ```
-order.add_document('/a/file/path', 'de', 'en')
+order.upload_document('/a/file/path', 'de', 'en')
 ```
 
 Request an order
