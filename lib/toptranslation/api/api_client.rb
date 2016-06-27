@@ -8,6 +8,10 @@ module Toptranslation
       @order_list ||= Toptranslation::OrderList.new(@connection, options)
     end
 
+    def projects(options={})
+      @project_list ||= Toptranslation::ProjectList.new(@connection, options)
+    end
+
     def locales(options={})
       @locale_list ||= Toptranslation::LocaleList.new(@connection, options)
     end

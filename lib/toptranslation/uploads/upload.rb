@@ -16,7 +16,7 @@ module Toptranslation
     end
 
     def upload_token
-      @connection.post('/document_store/upload_token')['upload_token']
+      @connection.post('/upload_tokens')['upload_token']
     end
 
     private
