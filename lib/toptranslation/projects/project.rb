@@ -49,6 +49,9 @@ module Toptranslation
     def update_from_response(response)
       @identifier = response['identifier'] if response['identifier']
       @created_at = DateTime.parse(response['created_at']) if response['created_at']
+      @locales = response['locales'].inject([]) do |locale|
+        accu << Locale.new(locale)
+      end
       @name = response['name'] if response['name']
     end
 
