@@ -73,3 +73,23 @@ Download a reference document
 reference_document.download
 ```
 
+### Projects
+Get projects of user
+
+```
+translation.projects  #=> Enumerable of projects
+```
+
+Add document to a project
+
+```
+project.upload_document('/a/file/path', 'de')
+```
+
+List documents of a project
+
+```
+project.documents #=> Enumerable of documents
+```
+
+

@@ -10,7 +10,7 @@ module Toptranslation
       update_from_response(options)
     end
 
-    def add_document(filepath, locale_code)
+    def upload_document(filepath, locale_code)
       upload = Upload.new(@connection).upload(filepath)
 
       response = @connection.post("/projects/#{ @identifier }/documents", {
