@@ -1,6 +1,6 @@
 module Toptranslation
   class Project
-    attr_reader :identifier, :created_at
+    attr_reader :identifier, :created_at, :locales
     attr_accessor :name
 
     def initialize(connection, options={})
