@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'toptranslation'
-  s.version     = '0.0.6'
+  s.version     = '0.0.7'
   s.date        = '2016-06-06'
   s.summary     = "A ruby client for the Toptranslation API"
   s.description = "Allows to create and control translation projects on Toptranslation via the Toptranslation API."
