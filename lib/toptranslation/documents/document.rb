@@ -45,6 +45,7 @@ module Toptranslation
     def update_from_response(response)
       @identifier = response['identifier'] if response['identifier']
       @name = response['name'] if response['name']
+      @path = response['path'] if response['path']
       @string_count = response['string_count'] if response['string_count']
       @has_missing_strings = response['has_missing_strings'] if response['has_missing_strings']
       @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
