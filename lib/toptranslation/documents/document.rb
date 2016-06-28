@@ -1,6 +1,6 @@
 module Toptranslation
   class Document
-    attr_reader :identifier, :string_count, :has_missing_strings, :updated_at, :created_at
+    attr_reader :identifier, :string_count, :has_missing_strings, :path, :updated_at, :created_at
     attr_accessor :name
 
     def initialize(connection, options={})
