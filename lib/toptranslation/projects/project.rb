@@ -58,6 +58,7 @@ module Toptranslation
         accu << Locale.new(locale)
       end
       @name = response['name'] if response['name']
+      @path = response['path'] if response['path']
     end
 
     def remote_hash
