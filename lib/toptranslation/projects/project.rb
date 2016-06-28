@@ -10,14 +10,19 @@ module Toptranslation
       update_from_response(options)
     end
 
-    def upload_document(filepath, locale_code)
+    def upload_document(filepath, locale_code, options={})
       upload = Upload.new(@connection).upload(filepath)
 
-      response = @connection.post("/projects/#{ @identifier }/documents", {
+      attr_hash = {
         document_store_id: upload.document_store_id,
         document_token: upload.document_token,
         locale_code: locale_code
-      })
+      }
+
+      attr_hash[:path] = options[:path] if options[:path]
+      attr_hash[:name] = options[:name] if options[:name]
+
+      response = @connection.post("/projects/#{ @identifier }/documents", attr_hash)
     end
 
     def documents
