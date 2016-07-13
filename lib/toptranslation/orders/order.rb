@@ -20,8 +20,6 @@ module Toptranslation
         target_locale_codes: target_locale_codes
       })
 
-      update_from_response(response)
-
       Document.new(@connection, response)
     end
 
