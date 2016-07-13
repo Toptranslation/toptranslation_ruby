@@ -91,6 +91,7 @@ module Toptranslation
       hash[:comment] = @comment if @comment
       hash[:coupon_code] = @coupon_code
       hash[:delivery_date] = @delivery_date
+      hash[:name] = @name if @name
       hash
     end
   end
