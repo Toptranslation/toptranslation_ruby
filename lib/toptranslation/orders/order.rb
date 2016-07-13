@@ -13,7 +13,7 @@ module Toptranslation
     end
 
     def add_document(document_store_id, document_token, source_locale_code, target_locale_codes)
-      response = @connection.post("/orders/#{ identifier }/documents", {
+      response = @connection.post("/orders/#{ @identifier }/documents", {
         document_store_id: document_store_id,
         document_token: document_token,
         locale_code: source_locale_code,
