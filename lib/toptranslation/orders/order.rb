@@ -22,7 +22,7 @@ module Toptranslation
 
       update_from_response(response)
 
-      response
+      Document.new(@connection, response)
     end
 
     def upload_document(filepath, source_locale_code, target_locale_codes)
