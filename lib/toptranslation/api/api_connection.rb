@@ -1,6 +1,7 @@
 module Toptranslation
   class ApiConnection
     def initialize(options)
+      @base_url = options[:base_url] || 'https://api.tt.gl/v0'
       @access_token = options[:access_token] || sign_in(options)
     end
 
@@ -25,7 +26,7 @@ module Toptranslation
     private
 
     def request(method, uri, options)
-      url = "https://api.tt.gl/v0#{ uri }"
+      url = "#{ @base_url }#{ uri }"
       RestClient.send(method, url, prepare_request_options(options, method))
     end
 
