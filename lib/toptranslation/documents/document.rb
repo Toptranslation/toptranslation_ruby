@@ -1,6 +1,6 @@
 module Toptranslation
   class Document
-    attr_reader :identifier, :string_count, :has_missing_strings, :path, :updated_at, :created_at
+    attr_reader :identifier, :string_count, :has_missing_strings, :path, :translations, :updated_at, :created_at
     attr_accessor :name
 
     def initialize(connection, options={})
@@ -18,12 +18,6 @@ module Toptranslation
         document_token: upload.document_token,
         locale_code: locale_code
       })
-    end
-
-    def translations
-      response = @connection.get("/documents/#{ @identifier }/translations").inject([]) do |accu, translation|
-        accu << Translation.new(@connection, translation)
-      end
     end
 
     def save
@@ -56,6 +50,11 @@ module Toptranslation
       @has_missing_strings = response['has_missing_strings'] if response['has_missing_strings']
       @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
       @created_at = DateTime.parse(response['created_at']) if response['created_at']
+      if response['translations']
+        @translations = response['translations'].inject([]) do |accu, translation|
+          accu << Translation.new(@connection, translation)
+        end
+      end
     end
 
     def remote_hash
