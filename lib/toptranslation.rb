@@ -15,6 +15,7 @@ require 'toptranslation/projects/project_list'
 require 'toptranslation/quotes/quote'
 require 'toptranslation/reference_documents/reference_document'
 require 'toptranslation/translations/translation'
+require 'toptranslation/translations/translation_list'
 require 'toptranslation/uploads/upload'
 require 'toptranslation/users/user'
 
