@@ -7,7 +7,7 @@ A ruby wrapper for the Toptranslation API.
 Authenticate with access token
 
 ```
-client = Toptranslation.new('access_token')
+client = Toptranslation.new(access_token: 'access_token')
 ```
 
 or authenticate by email and password
@@ -54,6 +54,12 @@ order.creator #=> User
 ```
 
 ### Translations
+Find a translation
+
+```
+translation = client.translations.find('translation_identifier') #=> A translation
+```
+
 Download of a translation
 
 ```
