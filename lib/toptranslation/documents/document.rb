@@ -20,6 +20,12 @@ module Toptranslation
       })
     end
 
+    def translations
+      response = @connection.get("/documents/#{ @identifier }/translations").inject([]) do |accu, translation|
+        accu << Translation.new(@connection, translation)
+      end
+    end
+
     def save
       response = @identifier ? update_remote_document : create_remote_document
       update_and_return_from_response(response)
