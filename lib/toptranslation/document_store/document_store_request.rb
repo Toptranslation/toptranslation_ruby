@@ -6,6 +6,6 @@ module Toptranslation
     include HTTMultiParty
     attr_reader :response
 
-    base_uri 'https://files.tt.gl'
+    base_uri 'https://files.toptranslation.com'
   end
 end
