@@ -8,6 +8,10 @@ module Toptranslation
     def initialize(connection, options={})
       @connection = connection
       @options = options
+      @name = @options[:name]
+      @reference = @options[:reference]
+      @comment = @options[:comment]
+      @coupon_code = @options[:coupon_code]
 
       update_from_response(options)
     end
