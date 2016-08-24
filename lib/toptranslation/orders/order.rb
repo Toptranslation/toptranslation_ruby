@@ -3,7 +3,7 @@ module Toptranslation
     attr_reader :identifier, :state, :created_at,
                 :requested_at, :ordered_at, :estimated_delivery_date,
                 :creator_hash, :progress, :order_number
-    attr_accessor :name, :reference, :comment, :coupon_code
+    attr_accessor :name, :reference, :comment, :coupon_code, :service_level, :desired_delivery_date
 
     def initialize(connection, options={})
       @connection = connection
@@ -12,6 +12,8 @@ module Toptranslation
       @reference = @options[:reference]
       @comment = @options[:comment]
       @coupon_code = @options[:coupon_code]
+      @service_level = @options[:service_level]
+      @desired_delivery_date = @options[:desired_delivery_date]
 
       update_from_response(options)
     end
@@ -87,6 +89,8 @@ module Toptranslation
       @comment = response['comment'] if response['comment']
       @progress = response['progress_in_percent'] if response['progress_in_percent']
       @order_number = response['order_number'] if response['order_number']
+      @service_level = response['service_level'] if response['service_level']
+      @desired_delivery_date = response['desired_delivery_date'] if response['desired_delivery_date']
     end
 
     def remote_hash
@@ -96,6 +100,9 @@ module Toptranslation
       hash[:coupon_code] = @coupon_code
       hash[:delivery_date] = @delivery_date
       hash[:name] = @name if @name
+      hash[:service_level] = @service_level if @service_level
+      hash[:desired_delivery_date] = @desired_delivery_date if @desired_delivery_date
+
       hash
     end
   end
