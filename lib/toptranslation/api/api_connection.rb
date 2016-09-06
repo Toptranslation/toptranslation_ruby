@@ -28,7 +28,7 @@ module Toptranslation
 
     def request(method, uri, options)
       url = "#{ @base_url }#{ uri }"
-      puts "#{ method }-request #{ uri }" if @verbose
+      puts "#{ method }-request #{ url }" if @verbose
       RestClient.send(method, url, prepare_request_options(options, method))
     end
 
