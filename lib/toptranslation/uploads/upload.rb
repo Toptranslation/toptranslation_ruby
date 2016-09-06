@@ -16,12 +16,18 @@ module Toptranslation
     end
 
     def upload_token
-      @connection.upload_token ||= @connection.post('/upload_tokens')['upload_token']
+      @connection.upload_token ||= request_upload_token
+    end
+
+    def request_upload_token
+      puts "Requesting upload-token"  if @connection.verbose
+      @connection.post('/upload_tokens')['upload_token']
     end
 
     private
 
     def request(filepath)
+      puts "Uploading: #{ filepath }" if @connection.verbose
       DocumentStoreRequest.post('/documents', :query => {
         file: File.new(filepath, 'r'),
         type: 'document',

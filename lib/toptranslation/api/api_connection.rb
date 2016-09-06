@@ -1,10 +1,11 @@
 module Toptranslation
   class ApiConnection
-    attr_accessor :upload_token
+    attr_accessor :upload_token, :verbose
 
     def initialize(options)
       @base_url = options[:base_url] || 'https://api.toptranslation.com/v0'
       @access_token = options[:access_token] || sign_in(options)
+      @verbose = options[:verbose] || false
     end
 
     def get(uri, options={})
@@ -27,6 +28,7 @@ module Toptranslation
 
     def request(method, uri, options)
       url = "#{ @base_url }#{ uri }"
+      puts "#{ method }-request #{ uri }" if @verbose
       RestClient.send(method, url, prepare_request_options(options, method))
     end
 
@@ -37,7 +39,11 @@ module Toptranslation
         application_id: 'pollux'
       }.merge!(options)
 
-      post('/auth/sign_in', sign_in_options)['access_token']
+      access_token = post('/auth/sign_in', sign_in_options)['access_token']
+
+      puts "Requested access token #{ access_token }" if @verbose
+
+      return access_token
     end
 
     def transform_response(response)
