@@ -3,7 +3,7 @@ module Toptranslation
     attr_reader :identifier, :state, :created_at,
                 :requested_at, :ordered_at, :estimated_delivery_date,
                 :creator_hash, :progress, :order_number
-    attr_accessor :name, :reference, :comment, :coupon_code, :service_level, :desired_delivery_date
+    attr_accessor :name, :reference, :comment, :coupon_code, :service_level, :desired_delivery_date, :quote_required
 
     def initialize(connection, options={})
       @connection = connection
@@ -14,6 +14,7 @@ module Toptranslation
       @coupon_code = @options[:coupon_code]
       @service_level = @options[:service_level]
       @desired_delivery_date = @options[:desired_delivery_date]
+      @quote_required = @options[:quote_required]
 
       update_from_response(options)
     end
@@ -102,6 +103,7 @@ module Toptranslation
       hash[:name] = @name if @name
       hash[:service_level] = @service_level if @service_level
       hash[:desired_delivery_date] = @desired_delivery_date if @desired_delivery_date
+      hash[:quote_required] = @quote_required if @quote_required
 
       hash
     end
