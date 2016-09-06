@@ -1,5 +1,7 @@
 module Toptranslation
   class ApiConnection
+    attr_accessor :upload_token
+
     def initialize(options)
       @base_url = options[:base_url] || 'https://api.toptranslation.com/v0'
       @access_token = options[:access_token] || sign_in(options)
@@ -18,9 +20,7 @@ module Toptranslation
     end
 
     def download(url, filename)
-      file = Tempfile.new(filename)
-
-      file
+      Tempfile.new(filename)
     end
 
     private

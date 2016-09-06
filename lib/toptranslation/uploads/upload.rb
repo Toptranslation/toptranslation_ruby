@@ -16,7 +16,7 @@ module Toptranslation
     end
 
     def upload_token
-      @connection.post('/upload_tokens')['upload_token']
+      @connection.upload_token ||= @connection.post('/upload_tokens')['upload_token']
     end
 
     private
