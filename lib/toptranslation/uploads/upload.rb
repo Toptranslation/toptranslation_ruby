@@ -10,8 +10,6 @@ module Toptranslation
     def upload(filepath)
       response = request(filepath)
 
-      binding.pry
-
       @document_store_id = response['data']['identifier']
       @document_token    = response['data']['document_token']
 

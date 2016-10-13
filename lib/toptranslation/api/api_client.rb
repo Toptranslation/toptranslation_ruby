@@ -1,7 +1,6 @@
 module Toptranslation
   class ApiClient
     def initialize(options)
-      puts Toptranslation::VERSION if options[:verbose]
       @connection = Toptranslation::ApiConnection.new(options)
     end
 
