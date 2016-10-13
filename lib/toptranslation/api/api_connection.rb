@@ -4,6 +4,7 @@ module Toptranslation
 
     def initialize(options)
       @base_url = options[:base_url] || 'https://api.toptranslation.com/v0'
+      @files_url = options[:files_url] || 'https://files.toptranslation.com'
       @access_token = options[:access_token] || sign_in(options)
       @verbose = options[:verbose] || false
     end
