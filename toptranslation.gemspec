@@ -17,6 +17,5 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
 
   s.add_runtime_dependency 'rest-client', '~> 1.8'
-  s.add_dependency 'httmultiparty', '~> 0.3.16'
   s.add_runtime_dependency 'pry', '~> 0.10'
 end

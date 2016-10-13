@@ -24,6 +24,15 @@ module Toptranslation
       Tempfile.new(filename)
     end
 
+    def upload(filepath, type)
+      url = "#{ @files_url }/documents"
+      RestClient.post(url,
+        file: File.new(filepath),
+        type: type,
+        token: upload_token
+      )
+    end
+
     private
 
     def request(method, uri, options)
@@ -31,6 +40,16 @@ module Toptranslation
       puts "#{ method }-request #{ url }" if @verbose
       RestClient.send(method, url, prepare_request_options(options, method))
     end
+
+    def upload_token
+      @upload_token ||= request_upload_token
+    end
+
+    def request_upload_token
+      puts "Requesting upload-token"  if @verbose
+      post('/upload_tokens')['upload_token']
+    end
+
 
     def sign_in(options)
       sign_in_options = {
