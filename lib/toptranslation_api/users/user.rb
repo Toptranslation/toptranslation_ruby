@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class User
     attr_reader :identifier, :first_name, :last_name, :name
 

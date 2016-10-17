@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class TranslationList
     def initialize(connection, options={})
       @connection = connection
@@ -7,7 +7,7 @@ module Toptranslation
 
     def find(identifier)
       result = @connection.get("/translations/#{ identifier }")
-      Toptranslation::Translation.new(@connection, result)
+      ToptranslationApi::Translation.new(@connection, result)
     end
   end
 end

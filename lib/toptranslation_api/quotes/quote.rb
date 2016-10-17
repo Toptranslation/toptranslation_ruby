@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class Quote
     attr_reader :identifier, :state, :product, :value, :created_at,
                 :estimated_delivery_date

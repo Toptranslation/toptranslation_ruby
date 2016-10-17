@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class ApiConnection
     attr_accessor :upload_token, :verbose
 
@@ -22,7 +22,11 @@ module Toptranslation
     end
 
     def download(url, filename)
-      Tempfile.new(filename)
+      Tempfile.open(filename) do |file|
+        RestClient.get url do |stream|
+          file.write stream
+        end
+      end
     end
 
     def upload(filepath, type)

@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class OrderList
     include Enumerable
 
@@ -9,11 +9,11 @@ module Toptranslation
 
     def find(identifier)
       result = @connection.get("/orders/#{ identifier }")
-      Toptranslation::Order.new(@connection, result)
+      ToptranslationApi::Order.new(@connection, result)
     end
 
     def create(options={})
-      Toptranslation::Order.new(@connection, options)
+      ToptranslationApi::Order.new(@connection, options)
     end
 
     def each

@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class ProjectList
     include Enumerable
 
@@ -9,11 +9,11 @@ module Toptranslation
 
     def find(identifier)
       result = @connection.get("/projects/#{ identifier }")
-      Toptranslation::Project.new(@connection, result)
+      ToptranslationApi::Project.new(@connection, result)
     end
 
     def create(options={})
-      Toptranslation::Project.new(@connection, options)
+      ToptranslationApi::Project.new(@connection, options)
     end
 
     def each

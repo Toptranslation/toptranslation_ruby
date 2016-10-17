@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class Order
     attr_reader :identifier, :state, :created_at,
                 :requested_at, :ordered_at, :estimated_delivery_date,
@@ -49,7 +49,7 @@ module Toptranslation
     end
 
     def creator
-      @creator ||= Toptranslation::User.new(@connection, @options['creator'])
+      @creator ||= ToptranslationApi::User.new(@connection, @options['creator'])
     end
 
     def save

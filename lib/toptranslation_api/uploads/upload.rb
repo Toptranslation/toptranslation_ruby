@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class Upload
     attr_reader :document_store_id, :document_token
 

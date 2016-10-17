@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class DocumentList
     include Enumerable
 
@@ -9,7 +9,7 @@ module Toptranslation
 
     def find(identifier)
       result = @connection.get("/documents/#{ identifier }")
-      Toptranslation::Document.new(@connection, result)
+      ToptranslationApi::Document.new(@connection, result)
     end
 
     def each

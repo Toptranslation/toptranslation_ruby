@@ -1,6 +1,4 @@
-require 'pry'
-
-module Toptranslation
+module ToptranslationApi
   class ProjectDocumentList < DocumentList
     private
       def documents

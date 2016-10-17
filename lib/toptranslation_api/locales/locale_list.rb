@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class LocaleList
     include Enumerable
 

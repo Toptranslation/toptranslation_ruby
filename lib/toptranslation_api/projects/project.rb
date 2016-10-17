@@ -1,4 +1,4 @@
-module Toptranslation
+module ToptranslationApi
   class Project
     attr_reader :identifier, :created_at, :locales
     attr_accessor :name
@@ -26,7 +26,7 @@ module Toptranslation
     end
 
     def documents
-      Toptranslation::ProjectDocumentList.new(@connection, project_identifier: @identifier)
+      ToptranslationApi::ProjectDocumentList.new(@connection, project_identifier: @identifier)
     end
 
     def save
