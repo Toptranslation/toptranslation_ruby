@@ -1,5 +1,5 @@
 module ToptranslationApi
-  class ApiConnection
+  class Connection
     attr_accessor :upload_token, :verbose
 
     def initialize(options)

@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'rest-client', '~> 2.0'
   s.add_runtime_dependency 'pry', '~> 0.10'
+  s.add_runtime_dependency 'json', '~> 2.0'
 end

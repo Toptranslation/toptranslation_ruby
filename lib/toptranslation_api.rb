@@ -1,24 +1,24 @@
 require 'rest-client'
-require 'toptranslation/api/api_client'
-require 'toptranslation/api/api_connection'
-require 'toptranslation/documents/document'
-require 'toptranslation/documents/document_list'
-require 'toptranslation/documents/project_document_list'
-require 'toptranslation/locales/locale_list'
-require 'toptranslation/locales/locale'
-require 'toptranslation/orders/order_list'
-require 'toptranslation/orders/order'
-require 'toptranslation/projects/project'
-require 'toptranslation/projects/project_list'
-require 'toptranslation/quotes/quote'
-require 'toptranslation/reference_documents/reference_document'
-require 'toptranslation/translations/translation'
-require 'toptranslation/translations/translation_list'
-require 'toptranslation/uploads/upload'
-require 'toptranslation/users/user'
+require 'toptranslation_api/api/client'
+require 'toptranslation_api/api/connection'
+require 'toptranslation_api/documents/document'
+require 'toptranslation_api/documents/document_list'
+require 'toptranslation_api/documents/project_document_list'
+require 'toptranslation_api/locales/locale_list'
+require 'toptranslation_api/locales/locale'
+require 'toptranslation_api/orders/order_list'
+require 'toptranslation_api/orders/order'
+require 'toptranslation_api/projects/project'
+require 'toptranslation_api/projects/project_list'
+require 'toptranslation_api/quotes/quote'
+require 'toptranslation_api/reference_documents/reference_document'
+require 'toptranslation_api/translations/translation'
+require 'toptranslation_api/translations/translation_list'
+require 'toptranslation_api/uploads/upload'
+require 'toptranslation_api/users/user'
 
 module ToptranslationApi
   def self.new(options)
-    ToptranslationApi::ApiClient.new(options)
+    ToptranslationApi::Client.new(options)
   end
 end

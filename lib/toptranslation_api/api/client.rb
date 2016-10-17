@@ -1,7 +1,7 @@
 module ToptranslationApi
-  class ApiClient
+  class Client
     def initialize(options)
-      @connection = ToptranslationApi::ApiConnection.new(options)
+      @connection = ToptranslationApi::Connection.new(options)
     end
 
     def orders(options={})
