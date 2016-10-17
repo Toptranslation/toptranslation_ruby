@@ -22,11 +22,13 @@ module ToptranslationApi
     end
 
     def download(url, filename)
-      Tempfile.open(filename) do |file|
-        RestClient.get url do |stream|
-          file.write stream
-        end
+      file = Tempfile.open(filename)
+      RestClient.get url do |stream|
+        file.write stream
       end
+      file
+    ensure
+      file.close
     end
 
     def upload(filepath, type)

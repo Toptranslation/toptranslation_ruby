@@ -27,25 +27,23 @@ module ToptranslationApi
         target_locale_codes: target_locale_codes
       })
 
-      Document.new(@connection, response)
+      ToptranslationApi::Document.new(@connection, response)
     end
 
     def upload_document(filepath, source_locale_code, target_locale_codes)
-      upload = Upload.new(@connection).upload(filepath)
+      upload = ToptranslationApi::Upload.new(@connection).upload(filepath)
 
       add_document(upload.document_store_id, upload.document_token, source_locale_code, target_locale_codes)
     end
 
     def quotes
       @quotes ||= @options['quotes'].inject([]) do |accu, quote|
-        accu << Quote.new(@connection, quote)
+        accu << ToptranslationApi::Quote.new(@connection, quote)
       end
     end
 
     def translations
-      @translations ||= @options['translations'].inject([]) do |accu, translation|
-        accu << Translation.new(@connection, translation)
-      end
+      TranslationList.new(@connection, order_identifier: @identifier)
     end
 
     def creator
