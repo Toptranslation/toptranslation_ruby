@@ -26,6 +26,8 @@ module Toptranslation
     end
 
     def upload(filepath, type)
+      token = upload_token
+
       url = "#{ @files_url }/documents"
       RestClient.post(url,
         file: File.new(filepath),
@@ -48,7 +50,9 @@ module Toptranslation
 
     def request_upload_token
       puts "Requesting upload-token"  if @verbose
-      post('/upload_tokens')['upload_token']
+      token = post('/upload_tokens')['upload_token']
+      puts "Upload-token retrieved: #{ token }" if @verbose
+      token
     end
 
 
