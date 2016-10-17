@@ -16,6 +16,6 @@ Gem::Specification.new do |s|
     'https://github.com/sr189/toptranslation'
   s.license       = 'MIT'
 
-  s.add_runtime_dependency 'rest-client', '~> 1.8'
+  s.add_runtime_dependency 'rest-client', '~> 2.0'
   s.add_runtime_dependency 'pry', '~> 0.10'
 end
