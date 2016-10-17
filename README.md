@@ -1,4 +1,4 @@
-# Toptranslation Ruby
+# Toptranslation Api
 
 A ruby wrapper for the Toptranslation API.
 
@@ -97,5 +97,3 @@ List documents of a project
 ```
 project.documents #=> Enumerable of documents
 ```
-
-
