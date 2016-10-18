@@ -43,7 +43,7 @@ module ToptranslationApi
     end
 
     def translations
-      TranslationList.new(@connection, order_identifier: @identifier)
+      ToptranslationApi::TranslationList.new(@connection, order_identifier: @identifier)
     end
 
     def creator

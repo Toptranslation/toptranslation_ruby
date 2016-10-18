@@ -32,13 +32,13 @@ module ToptranslationApi
     end
 
     def upload(filepath, type)
-      token = upload_token
-
-      url = "#{ @files_url }/documents"
-      RestClient.post(url,
-        file: File.new(filepath),
-        type: type,
-        token: upload_token
+      transform_response(
+        RestClient.post(
+          "#{ @files_url }/documents",
+          file: File.new(filepath),
+          type: type,
+          token: upload_token
+        )
       )
     end
 

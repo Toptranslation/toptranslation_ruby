@@ -11,8 +11,8 @@ module ToptranslationApi
       puts "Uploading: #{ filepath }" if @connection.verbose
       response = @connection.upload(filepath, type)
 
-      @document_store_id = response['data']['identifier']
-      @document_token    = response['data']['document_token']
+      @document_store_id = response['identifier']
+      @document_token    = response['document_token']
 
       self
     end
