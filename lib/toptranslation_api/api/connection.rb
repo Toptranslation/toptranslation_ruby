@@ -32,21 +32,21 @@ module ToptranslationApi
     end
 
     def upload(filepath, type)
-      transform_response(
-        RestClient.post(
-          "#{ @files_url }/documents",
-          file: File.new(filepath),
-          type: type,
-          token: upload_token
-        )
+      response = RestClient.post(
+        "#{ @files_url }/documents",
+        file: File.new(filepath),
+        type: type,
+        token: upload_token
       )
+
+      transform_response(response)
     end
 
     private
 
     def request(method, uri, options)
       url = "#{ @base_url }#{ uri }"
-      puts "#{ method }-request #{ url }" if @verbose
+      puts "# #{ method }-request #{ url }" if @verbose
       RestClient.send(method, url, prepare_request_options(options, method))
     end
 
@@ -55,9 +55,9 @@ module ToptranslationApi
     end
 
     def request_upload_token
-      puts "Requesting upload-token"  if @verbose
+      puts "# Requesting upload-token"  if @verbose
       token = post('/upload_tokens')['upload_token']
-      puts "Upload-token retrieved: #{ token }" if @verbose
+      puts "# Upload-token retrieved: #{ token }" if @verbose
       token
     end
 
@@ -71,7 +71,7 @@ module ToptranslationApi
 
       access_token = post('/auth/sign_in', sign_in_options)['access_token']
 
-      puts "Requested access token #{ access_token }" if @verbose
+      puts "# Requested access token #{ access_token }" if @verbose
 
       return access_token
     end

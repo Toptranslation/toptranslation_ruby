@@ -22,7 +22,7 @@ module ToptranslationApi
       attr_hash[:path] = options[:path] if options[:path]
       attr_hash[:name] = options[:name] if options[:name]
 
-      response = @connection.post("/projects/#{ @identifier }/documents", attr_hash)
+      @connection.post("/projects/#{ @identifier }/documents", attr_hash)
     end
 
     def documents

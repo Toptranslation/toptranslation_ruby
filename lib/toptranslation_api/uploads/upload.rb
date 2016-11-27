@@ -8,7 +8,7 @@ module ToptranslationApi
     end
 
     def upload(filepath, type='document')
-      puts "Uploading: #{ filepath }" if @connection.verbose
+      puts "# Uploading: #{ filepath }" if @connection.verbose
       response = @connection.upload(filepath, type)
 
       @document_store_id = response['identifier']
