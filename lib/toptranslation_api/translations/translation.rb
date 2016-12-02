@@ -20,19 +20,18 @@ module ToptranslationApi
     end
 
     private
+      def download_url
+        @download_url ||= @connection.get("/translations/#{ identifier }/download")['download_url']
+      end
 
-    def download_url
-      @download_url ||= @connection.get("/translations/#{ identifier }/download")['download_url']
-    end
-
-    def update_from_response(response)
-      @identifier = response['identifier'] if response['identifier']
-      @filename = response['filename'] if response['filename']
-      @mime_type = response['mime_type'] if response['mime_type']
-      @progress = response['progress_in_percent'] if response['progress_in_percent']
-      @sha1 = response['sha1'] if response['sha1']
-      @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
-      @created_at = DateTime.parse(response['created_at']) if response['created_at']
-    end
+      def update_from_response(response)
+        @identifier = response['identifier'] if response['identifier']
+        @filename = response['filename'] if response['filename']
+        @mime_type = response['mime_type'] if response['mime_type']
+        @progress = response['progress_in_percent'] if response['progress_in_percent']
+        @sha1 = response['sha1'] if response['sha1']
+        @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
+        @created_at = DateTime.parse(response['created_at']) if response['created_at']
+      end
   end
 end

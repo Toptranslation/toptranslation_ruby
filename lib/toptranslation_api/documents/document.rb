@@ -26,41 +26,40 @@ module ToptranslationApi
     end
 
     private
-
-    def update_remote_document
-      @connection.patch("/documents/#{ @identifier }", remote_hash)
-    end
-
-    def create_remote_document
-      @connection.post("/documents", remote_hash)
-    end
-
-    def update_and_return_from_response(response)
-      if response
-        update_from_response(response)
-        self
+      def update_remote_document
+        @connection.patch("/documents/#{ @identifier }", remote_hash)
       end
-    end
 
-    def update_from_response(response)
-      @identifier = response['identifier'] if response['identifier']
-      @name = response['name'] if response['name']
-      @path = response['path'] if response['path']
-      @string_count = response['string_count'] if response['string_count']
-      @has_missing_strings = response['has_missing_strings'] if response['has_missing_strings']
-      @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
-      @created_at = DateTime.parse(response['created_at']) if response['created_at']
-      if response['translations']
-        @translations = response['translations'].inject([]) do |accu, translation|
-          accu << Translation.new(@connection, translation)
+      def create_remote_document
+        @connection.post("/documents", remote_hash)
+      end
+
+      def update_and_return_from_response(response)
+        if response
+          update_from_response(response)
+          self
         end
       end
-    end
 
-    def remote_hash
-      hash = {}
-      hash[:name] = @name if @name
-      hash
-    end
+      def update_from_response(response)
+        @identifier = response['identifier'] if response['identifier']
+        @name = response['name'] if response['name']
+        @path = response['path'] if response['path']
+        @string_count = response['string_count'] if response['string_count']
+        @has_missing_strings = response['has_missing_strings'] if response['has_missing_strings']
+        @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
+        @created_at = DateTime.parse(response['created_at']) if response['created_at']
+        if response['translations']
+          @translations = response['translations'].inject([]) do |accu, translation|
+            accu << Translation.new(@connection, translation)
+          end
+        end
+      end
+
+      def remote_hash
+        hash = {}
+        hash[:name] = @name if @name
+        hash
+      end
   end
 end
