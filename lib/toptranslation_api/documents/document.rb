@@ -20,6 +20,17 @@ module ToptranslationApi
       })
     end
 
+    def build(format, locale_code)
+      response = @connection.post("/documents/#{ @identifier }/build", {
+        format: format,
+        locale_code: locale_code
+      })
+
+      if response
+        @connection.download(response['download_url'], @name)
+      end
+    end
+
     def save
       response = @identifier ? update_remote_document : create_remote_document
       update_and_return_from_response(response)
