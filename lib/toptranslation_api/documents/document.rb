@@ -22,7 +22,7 @@ module ToptranslationApi
 
     def build(format, locale_code)
       response = @connection.post("/documents/#{ @identifier }/build", {
-        format: format,
+        file_format: format,
         locale_code: locale_code
       })
 
