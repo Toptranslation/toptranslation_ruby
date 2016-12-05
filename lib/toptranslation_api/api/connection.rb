@@ -22,6 +22,7 @@ module ToptranslationApi
     end
 
     def download(url, filename)
+      puts "# downloading #{ url }" if @verbose
       file = Tempfile.open(filename)
       RestClient.get url do |stream|
         file.write stream
