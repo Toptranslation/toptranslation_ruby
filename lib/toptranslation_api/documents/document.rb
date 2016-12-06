@@ -21,14 +21,10 @@ module ToptranslationApi
     end
 
     def build(format, locale_code)
-      response = @connection.post("/documents/#{ @identifier }/build", {
+      @connection.post("/documents/#{ @identifier }/build", {
         file_format: format,
         locale_code: locale_code
       })
-
-      if response
-        @connection.download(response['download_url'], @name)
-      end
     end
 
     def save
