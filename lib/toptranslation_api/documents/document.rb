@@ -32,6 +32,10 @@ module ToptranslationApi
       update_and_return_from_response(response)
     end
 
+    def strings
+      ToptranslationApi::StringList.new(@connection, document_identifier: @identifier)
+    end
+
     private
       def update_remote_document
         @connection.patch("/documents/#{ @identifier }", remote_hash)

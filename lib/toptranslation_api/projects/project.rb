@@ -29,6 +29,10 @@ module ToptranslationApi
       ToptranslationApi::ProjectDocumentList.new(@connection, project_identifier: @identifier)
     end
 
+    def strings
+      ToptranslationApi::StringList.new(@connection, project_identifier: @identifier)      
+    end
+
     def save
       response = @identifier ? update_remote_project : create_remote_project
       update_and_return_from_response(response)

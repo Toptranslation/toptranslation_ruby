@@ -83,7 +83,7 @@ reference_document.download
 Get projects of user
 
 ```
-translation.projects  #=> Enumerable of projects
+client.projects  #=> Enumerable of projects
 ```
 
 Add document to a project
@@ -96,4 +96,17 @@ List documents of a project
 
 ```
 project.documents #=> Enumerable of documents
+```
+
+Get strings of a project
+
+```
+project.strings #=> Enumerable of strings
+```
+
+### Documents
+Get strings of a project
+
+```
+document.strings #=> Enumerable of strings
 ```
