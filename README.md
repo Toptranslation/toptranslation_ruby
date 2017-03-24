@@ -104,9 +104,23 @@ Get strings of a project
 project.strings #=> Enumerable of strings
 ```
 
+Create new string
+
+```
+string = project.strings.create(locale_code: 'de', value: 'Ein Test', key: 'a_test')
+string.save
+```
+
 ### Documents
 Get strings of a project
 
 ```
 document.strings #=> Enumerable of strings
+```
+
+Create new string
+
+```
+string = document.strings.create(locale_code: 'de', value: 'Ein Test', key: 'a_test')
+string.save
 ```
