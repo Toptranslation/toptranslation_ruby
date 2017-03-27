@@ -23,7 +23,7 @@ module ToptranslationApi
       response = @connection.post("/orders/#{ @identifier }/documents", {
         document_store_id: document_store_id,
         document_token: document_token,
-        locale_code: source_locale_code,
+        source_locale_code: source_locale_code,
         target_locale_codes: target_locale_codes
       })
 
