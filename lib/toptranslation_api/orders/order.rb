@@ -36,6 +36,10 @@ module ToptranslationApi
       add_document(upload.document_store_id, upload.document_token, source_locale_code, target_locale_codes)
     end
 
+    def documents
+      @connection.get "orders/#{@identifier}/documents"
+    end
+
     def quotes
       @quotes ||= @options['quotes'].inject([]) do |accu, quote|
         accu << ToptranslationApi::Quote.new(@connection, quote)
