@@ -20,11 +20,9 @@ module ToptranslationApi
       })
     end
 
-    def build(format, locale_code)
-      @connection.post("/documents/#{ @identifier }/build", {
-        file_format: format,
-        locale_code: locale_code
-      })
+    def download(locale_code, file_format = nil)
+      headers = { file_format: file_format, locale_code: locale_code }.compact
+      @connection.get("/documents/#{@identifier}/download", headers)
     end
 
     def save
