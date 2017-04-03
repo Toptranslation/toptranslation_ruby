@@ -1,7 +1,7 @@
 module ToptranslationApi
   class Document
-    attr_reader :identifier, :string_count, :has_missing_strings, :path, :translations, :updated_at, :created_at
-    attr_accessor :name
+    attr_reader :identifier, :string_count, :has_missing_strings, :translations, :updated_at, :created_at
+    attr_accessor :name, :path
 
     def initialize(connection, options={})
       @connection = connection
@@ -35,6 +35,7 @@ module ToptranslationApi
     end
 
     private
+
       def update_remote_document
         @connection.patch("/documents/#{ @identifier }", remote_hash)
       end

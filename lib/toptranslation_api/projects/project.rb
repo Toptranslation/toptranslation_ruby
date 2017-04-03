@@ -30,7 +30,7 @@ module ToptranslationApi
     end
 
     def strings
-      ToptranslationApi::StringList.new(@connection, project_identifier: @identifier)      
+      ToptranslationApi::StringList.new(@connection, project_identifier: @identifier)
     end
 
     def save
@@ -40,34 +40,34 @@ module ToptranslationApi
 
     private
 
-    def update_remote_project
-      @connection.patch("/projects/#{ @identifier }", remote_hash)
-    end
-
-    def create_remote_project
-      @connection.post("/projects", remote_hash)
-    end
-
-    def update_and_return_from_response(response)
-      if response
-        update_from_response(response)
-        self
+      def update_remote_project
+        @connection.patch("/projects/#{ @identifier }", remote_hash)
       end
-    end
 
-    def update_from_response(response)
-      @identifier = response['identifier'] if response['identifier']
-      @created_at = DateTime.parse(response['created_at']) if response['created_at']
-      @locales = response['locales'].inject([]) do |accu, locale|
-        accu << Locale.new(locale)
+      def create_remote_project
+        @connection.post("/projects", remote_hash)
       end
-      @name = response['name'] if response['name']
-    end
 
-    def remote_hash
-      hash = {}
-      hash[:name] = @name if @name
-      hash
-    end
+      def update_and_return_from_response(response)
+        if response
+          update_from_response(response)
+          self
+        end
+      end
+
+      def update_from_response(response)
+        @identifier = response['identifier'] if response['identifier']
+        @created_at = DateTime.parse(response['created_at']) if response['created_at']
+        @locales = response['locales'].inject([]) do |accu, locale|
+          accu << Locale.new(locale)
+        end
+        @name = response['name'] if response['name']
+      end
+
+      def remote_hash
+        hash = {}
+        hash[:name] = @name if @name
+        hash
+      end
   end
 end
