@@ -2,7 +2,7 @@ module ToptranslationApi
   class ProjectDocumentList < DocumentList
     def create(name, path)
       response = @connection.post("/projects/#{ @options[:project_identifier] }/documents", {name: name, path: path})
-      Document.new(@connection, document)
+      Document.new(@connection, response)
     end
 
     private
