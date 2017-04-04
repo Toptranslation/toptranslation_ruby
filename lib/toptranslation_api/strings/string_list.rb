@@ -4,7 +4,7 @@ module ToptranslationApi
 
     def initialize(connection, options={})
       @connection = connection
-      @options = options
+      @options = options.symbolize_keys
     end
 
     def find(identifier)
@@ -17,6 +17,7 @@ module ToptranslationApi
     end
 
     def create(options={})
+      options.symbolize_keys!
       project_identifier = options[:project_identifier] || @options[:project_identifier]
       document_identifier = options[:document_identifier] || @options[:document_identifier]
 
