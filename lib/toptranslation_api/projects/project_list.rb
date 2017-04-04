@@ -22,8 +22,8 @@ module ToptranslationApi
 
     private
 
-    def projects
-      @connection.get('/projects')
-    end
+      def projects
+        @connection.get('/projects')
+      end
   end
 end

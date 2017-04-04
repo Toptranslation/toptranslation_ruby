@@ -1,6 +1,6 @@
 module ToptranslationApi
   class Project
-    attr_reader :identifier, :created_at, :locales
+    attr_reader :identifier, :created_at, :locales, :source_locale
     attr_accessor :name
 
     def initialize(connection, options={})
@@ -58,8 +58,10 @@ module ToptranslationApi
       def update_from_response(response)
         @identifier = response['identifier'] if response['identifier']
         @created_at = DateTime.parse(response['created_at']) if response['created_at']
-        @locales = response['locales'].inject([]) do |accu, locale|
-          accu << Locale.new(locale)
+        @locales = response['locales'].inject([]) do |accu, locale_data|
+          locale = Locale.new(locale_data)
+          @source_locale = locale if locale_data['is_source_locale'] # Set source locale of the project
+          accu << locale
         end
         @name = response['name'] if response['name']
       end

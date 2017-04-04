@@ -17,6 +17,7 @@ module ToptranslationApi
     end
 
     private
+
       def documents
         @connection.get("/documents")
       end
