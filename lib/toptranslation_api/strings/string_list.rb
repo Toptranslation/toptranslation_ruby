@@ -17,7 +17,10 @@ module ToptranslationApi
     end
 
     def create(options={})
-      ToptranslationApi::String.new(@connection, options.merge('project_identifier' => @options[:project_identifier], 'document_identifier' => @options[:document_identifier]))
+      project_identifier = options[:project_identifier] || @options[:project_identifier]
+      document_identifier = options[:document_identifier] || @options[:document_identifier]
+
+      ToptranslationApi::String.new(@connection, options.merge('project_identifier' => project_identifier, 'document_identifier' => document_identifier))
     end
 
     private
