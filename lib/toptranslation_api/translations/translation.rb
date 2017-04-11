@@ -1,7 +1,7 @@
 module ToptranslationApi
   class Translation
     attr_reader :identifier, :filename, :filesize, :mime_type, :updated_at, :created_at,
-                :progress, :sha1
+                :progress, :sha1, :locale
 
     def initialize(connection, options={})
       @connection = connection
@@ -32,6 +32,7 @@ module ToptranslationApi
         @sha1 = response['sha1'] if response['sha1']
         @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
         @created_at = DateTime.parse(response['created_at']) if response['created_at']
+        @locale = Locale.new(response['locale']) if response['locale']
       end
   end
 end
