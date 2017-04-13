@@ -10,13 +10,13 @@ module ToptranslationApi
       update_from_response(options)
     end
 
-    def add_translation(filepath, locale_code)
+    def add_translation(filepath, locale_code, options={})
       upload = Upload.new(@connection).upload(filepath)
 
-      response = @connection.post("/documents/#{ @identifier }/translations", {
+      response = @connection.post("/documents/#{ @identifier }/translations", options.merge{
         document_store_id: upload.document_store_id,
         document_token: upload.document_token,
-        locale_code: locale_code
+        locale_code: locale_code,
       })
     end
 
