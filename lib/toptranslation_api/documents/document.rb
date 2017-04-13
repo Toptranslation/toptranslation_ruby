@@ -13,11 +13,11 @@ module ToptranslationApi
     def add_translation(filepath, locale_code, options={})
       upload = Upload.new(@connection).upload(filepath)
 
-      response = @connection.post("/documents/#{ @identifier }/translations", options.merge{
+      response = @connection.post("/documents/#{ @identifier }/translations", options.merge({
         document_store_id: upload.document_store_id,
         document_token: upload.document_token,
         locale_code: locale_code,
-      })
+      }))
     end
 
     def download(locale_code, file_format = nil)
