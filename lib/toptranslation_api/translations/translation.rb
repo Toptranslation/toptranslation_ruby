@@ -1,7 +1,7 @@
 module ToptranslationApi
   class Translation
     attr_reader :identifier, :filename, :filesize, :mime_type, :updated_at, :created_at,
-                :progress, :sha1, :locale, :external_checksum
+                :progress, :sha1, :locale, :external_checksum, :segments_sha1
 
     def initialize(connection, options={})
       @connection = connection
@@ -30,6 +30,7 @@ module ToptranslationApi
         @mime_type = response['mime_type'] if response['mime_type']
         @progress = response['progress_in_percent'] if response['progress_in_percent']
         @sha1 = response['sha1'] if response['sha1']
+        @segments_sha1 = response['segments_sha1'] if response['segments_sha1']
         @external_checksum = response['external_checksum'] if response['external_checksum']
         @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
         @created_at = DateTime.parse(response['created_at']) if response['created_at']
