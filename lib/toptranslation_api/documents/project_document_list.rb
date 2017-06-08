@@ -6,7 +6,7 @@ module ToptranslationApi
     end
 
     def create_batch(documents)
-      response = @connection.post("/projects/#{ @options[:project_identifier] }/documents/batch", options.merge({documents: documents}))
+      response = @connection.post("/projects/#{ @options[:project_identifier] }/documents/batch", documents: documents)
 
       response.map { |document_attr| ToptranslationApi::Document.new(@connection, document_attr) }
 
