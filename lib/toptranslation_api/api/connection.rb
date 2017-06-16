@@ -23,21 +23,8 @@ module ToptranslationApi
 
     def download(url, filename)
       puts "# downloading #{ url }" if @verbose
-
-      file = Tempfile.open(filename)
-
-      begin
-        block = proc do |response|
-          response.read_body do |chunk|
-            file.write chunk
-          end
-        end
-        RestClient::Request.execute(method: :get, url: url, raw_response: true, block_response: block)
-      ensure
-        file.close
-      end
-
-      file
+      raw = RestClient::Request.execute(method: :get, url: url, raw_response: true)
+      raw.file
     end
 
     def upload(filepath, type)
