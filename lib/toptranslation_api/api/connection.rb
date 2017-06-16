@@ -36,6 +36,8 @@ module ToptranslationApi
       ensure
         file.close
       end
+
+      file
     end
 
     def upload(filepath, type)
