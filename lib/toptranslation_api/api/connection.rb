@@ -32,7 +32,7 @@ module ToptranslationApi
             file.write chunk
           end
         end
-        RestClient::Request.execute(method: :get, url: url, block_response: block)
+        RestClient::Request.execute(method: :get, url: url, raw_response: true, block_response: block)
       ensure
         file.close
       end
