@@ -15,7 +15,7 @@ module ToptranslationApi
     private
 
       def documents
-        @connection.get("/projects/#{ @options[:project_identifier] }/documents", { per_page: 100 })
+        @connection.get("/projects/#{ @options[:project_identifier] }/documents", params: { per_page: 100 })
       end
   end
 end
