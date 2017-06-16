@@ -23,11 +23,15 @@ module ToptranslationApi
 
     def download(url, filename)
       puts "# downloading #{ url }" if @verbose
-      file = Tempfile.open(filename)
-      RestClient.get url do |stream|
-        file.write stream
+
+      file = Tempfile.open(filename) do |f|
+        block = proc do |response|
+          response.read_body do |chunk|
+            f.write chunk
+          end
+        end
+        RestClient::Request.execute(method: :get, url: url, block_response: block)
       end
-      file
     ensure
       file.close
     end
