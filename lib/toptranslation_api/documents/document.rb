@@ -21,8 +21,8 @@ module ToptranslationApi
     end
 
     def download(locale_code, file_format = nil)
-      headers = { file_format: file_format, locale_code: locale_code }.compact
-      @connection.get("/documents/#{@identifier}/download", headers)
+      params = { file_format: file_format, locale_code: locale_code }.compact
+      @connection.get("/documents/#{@identifier}/download", params: params)
     end
 
     def save
