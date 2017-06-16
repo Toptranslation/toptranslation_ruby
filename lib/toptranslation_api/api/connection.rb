@@ -29,7 +29,7 @@ module ToptranslationApi
       begin
         block = proc do |response|
           response.read_body do |chunk|
-            f.write chunk
+            file.write chunk
           end
         end
         RestClient::Request.execute(method: :get, url: url, block_response: block)
