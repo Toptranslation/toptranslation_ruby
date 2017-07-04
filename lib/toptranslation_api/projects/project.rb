@@ -1,6 +1,6 @@
 module ToptranslationApi
   class Project
-    attr_reader :identifier, :created_at, :locales, :source_locale
+    attr_reader :identifier, :created_at, :locales, :source_locale, :external_locale_code_format
     attr_accessor :name
 
     def initialize(connection, options={})
@@ -65,6 +65,7 @@ module ToptranslationApi
           @source_locale = locale if locale_data['is_source_locale'] # Set source locale of the project
           accu << locale
         end
+        @external_locale_code_format = response['external_locale_code_format']
         @name = response['name'] if response['name']
       end
 
