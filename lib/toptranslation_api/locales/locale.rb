@@ -1,6 +1,6 @@
 module ToptranslationApi
   class Locale
-    attr_reader :name, :code
+    attr_reader :name, :code, :external_locale_code
 
     def initialize(options={})
       @options = options
@@ -12,6 +12,7 @@ module ToptranslationApi
     def update_from_response(response)
       @code = response['code'] if response['code']
       @name = response['name'] if response['name']
+      @external_locale_code = response['external_locale_code']
     end
   end
 end
