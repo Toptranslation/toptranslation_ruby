@@ -1,4 +1,4 @@
-$LOAD_PATH.gemspec File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
 require 'toptranslation_api/version'
