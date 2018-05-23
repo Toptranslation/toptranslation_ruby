@@ -2,22 +2,22 @@ module ToptranslationApi
   class ProjectList
     include Enumerable
 
-    def initialize(connection, options={})
+    def initialize(connection, options = {})
       @connection = connection
       @options = options
     end
 
     def find(identifier)
-      result = @connection.get("/projects/#{ identifier }")
+      result = @connection.get("/projects/#{identifier}")
       ToptranslationApi::Project.new(@connection, result)
     end
 
-    def create(options={})
+    def create(options = {})
       ToptranslationApi::Project.new(@connection, options)
     end
 
     def each
-      projects.each do |project| yield Project.new(@connection, project) end
+      projects.each { |project| yield Project.new(@connection, project) }
     end
 
     private

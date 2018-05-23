@@ -3,7 +3,7 @@ module ToptranslationApi
     attr_reader :identifier, :filename, :filesize, :mime_type, :updated_at, :created_at,
                 :progress, :sha1, :locale, :external_checksum, :segments_sha1
 
-    def initialize(connection, options={})
+    def initialize(connection, options = {})
       @connection = connection
       @options = options
       update_from_response(options)
@@ -20,8 +20,9 @@ module ToptranslationApi
     end
 
     private
+
       def download_url
-        @download_url ||= @connection.get("/translations/#{ identifier }/download")['download_url']
+        @download_url ||= @connection.get("/translations/#{identifier}/download")['download_url']
       end
 
       def update_from_response(response)

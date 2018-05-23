@@ -9,27 +9,27 @@ module ToptranslationApi
       @verbose = options[:verbose] || false
     end
 
-    def get(uri, options={})
+    def get(uri, options = {})
       transform_response(request(:get, uri, options))
     end
 
-    def post(uri, options={})
+    def post(uri, options = {})
       transform_response(request(:post, uri, options))
     end
 
-    def patch(uri, options={})
+    def patch(uri, options = {})
       transform_response(request(:patch, uri, options))
     end
 
-    def download(url, filename)
-      puts "# downloading #{ url }" if @verbose
+    def download(url, _filename)
+      puts "# downloading #{url}" if @verbose
       raw = RestClient::Request.execute(method: :get, url: url, raw_response: true)
       raw.file
     end
 
     def upload(filepath, type)
       response = RestClient.post(
-        "#{ @files_url }/documents",
+        "#{@files_url}/documents",
         file: File.new(filepath),
         type: type,
         token: upload_token
@@ -41,9 +41,9 @@ module ToptranslationApi
     private
 
       def request(method, uri, options)
-        url = "#{ @base_url }#{ uri }"
-        puts "# #{ method }-request #{ url }" if @verbose
-        puts "options: #{ prepare_request_options(options, method) }" if @verbose
+        url = "#{@base_url}#{uri}"
+        puts "# #{method}-request #{url}" if @verbose
+        puts "options: #{prepare_request_options(options, method)}" if @verbose
         RestClient.send(method, url, prepare_request_options(options, method))
       rescue RestClient::ExceptionWithResponse => e
         puts e.response if @verbose
@@ -54,9 +54,9 @@ module ToptranslationApi
       end
 
       def request_upload_token
-        puts "# Requesting upload-token"  if @verbose
+        puts '# Requesting upload-token' if @verbose
         token = post('/upload_tokens')['upload_token']
-        puts "# Upload-token retrieved: #{ token }" if @verbose
+        puts "# Upload-token retrieved: #{token}" if @verbose
         token
       end
 
@@ -69,9 +69,9 @@ module ToptranslationApi
 
         access_token = post('/auth/sign_in', sign_in_options)['access_token']
 
-        puts "# Requested access token #{ access_token }" if @verbose
+        puts "# Requested access token #{access_token}" if @verbose
 
-        return access_token
+        access_token
       end
 
       def transform_response(response)
@@ -80,11 +80,11 @@ module ToptranslationApi
       end
 
       def prepare_request_options(options, method)
-        if [:post, :patch].include? method
-          options.merge!( auth_params )
+        if %i[post patch].include? method
+          options.merge!(auth_params)
         else
           params = options[:params] || {}
-          options.merge!({ params: params.merge!(auth_params) })
+          options.merge!(params: params.merge!(auth_params))
         end
       end
 

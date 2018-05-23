@@ -9,3 +9,6 @@
 
 .DS_Store
 *.gem
+
+# rubocop remote config
+.rubocop-*

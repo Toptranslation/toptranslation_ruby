@@ -3,7 +3,7 @@ module ToptranslationApi
     attr_reader :identifier, :updated_at, :created_at
     attr_accessor :value, :state, :project_identifier, :document_identifier, :key, :comment, :context, :array_index, :plural_form, :locale_code
 
-    def initialize(connection, options={})
+    def initialize(connection, options = {})
       @connection = connection
       @options = options
 
@@ -18,11 +18,11 @@ module ToptranslationApi
     private
 
       def update_remote_string
-        @connection.patch("/strings/#{ @identifier }", remote_hash)
+        @connection.patch("/strings/#{@identifier}", remote_hash)
       end
 
       def create_remote_string
-        @connection.post("/strings", remote_hash)
+        @connection.post('/strings', remote_hash)
       end
 
       def update_and_return_from_response(response)

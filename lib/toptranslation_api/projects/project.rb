@@ -3,14 +3,14 @@ module ToptranslationApi
     attr_reader :identifier, :created_at, :locales, :source_locale
     attr_accessor :name
 
-    def initialize(connection, options={})
+    def initialize(connection, options = {})
       @connection = connection
       @options = options
 
       update_from_response(options)
     end
 
-    def upload_document(filepath, locale_code, options={})
+    def upload_document(filepath, locale_code, options = {})
       upload = Upload.new(@connection).upload(filepath)
 
       attr_hash = {
@@ -22,7 +22,7 @@ module ToptranslationApi
       attr_hash[:path] = options[:path] if options[:path]
       attr_hash[:name] = options[:name] if options[:name]
 
-      response = @connection.post("/projects/#{ @identifier }/documents", attr_hash)
+      response = @connection.post("/projects/#{@identifier}/documents", attr_hash)
 
       Document.new(@connection, response)
     end
@@ -43,11 +43,11 @@ module ToptranslationApi
     private
 
       def update_remote_project
-        @connection.patch("/projects/#{ @identifier }", remote_hash)
+        @connection.patch("/projects/#{@identifier}", remote_hash)
       end
 
       def create_remote_project
-        @connection.post("/projects", remote_hash)
+        @connection.post('/projects', remote_hash)
       end
 
       def update_and_return_from_response(response)

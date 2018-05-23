@@ -2,26 +2,24 @@ module ToptranslationApi
   class TranslationList
     include Enumerable
 
-    def initialize(connection, options={})
+    def initialize(connection, options = {})
       @connection = connection
       @options = options
     end
 
     def find(identifier)
-      result = @connection.get("/translations/#{ identifier }")
+      result = @connection.get("/translations/#{identifier}")
       ToptranslationApi::Translation.new(@connection, result)
     end
 
     def each
-      translations.each do |translation| yield ToptranslationApi::Translation.new(@connection, translation) end
+      translations.each { |translation| yield ToptranslationApi::Translation.new(@connection, translation) }
     end
 
     private
 
-    def translations
-      if @options[:order_identifier]
-        @connection.get("/orders/#{ @options[:order_identifier] }/translations")
+      def translations
+        @connection.get("/orders/#{@options[:order_identifier]}/translations") if @options[:order_identifier]
       end
-    end
   end
 end

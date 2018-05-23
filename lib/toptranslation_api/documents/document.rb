@@ -3,24 +3,24 @@ module ToptranslationApi
     attr_reader :identifier, :string_count, :has_missing_strings, :translations, :updated_at, :created_at
     attr_accessor :name, :path
 
-    def initialize(connection, options={})
+    def initialize(connection, options = {})
       @connection = connection
       @options = options
 
       update_from_response(options)
     end
 
-    def add_translation(filepath, locale_code, options={})
+    def add_translation(filepath, locale_code, options = {})
       upload = Upload.new(@connection).upload(filepath)
 
-      response = @connection.post("/documents/#{ @identifier }/translations", options.merge({
-        document_store_id: upload.document_store_id,
-        document_token: upload.document_token,
-        locale_code: locale_code,
-      }))
+      response = @connection.post("/documents/#{@identifier}/translations", options.merge(
+                                                                              document_store_id: upload.document_store_id,
+                                                                              document_token: upload.document_token,
+                                                                              locale_code: locale_code
+                                                                            ))
     end
 
-    def download(locale_code, options={})
+    def download(locale_code, options = {})
       params = { file_format: options[:file_format], locale_code: locale_code }.compact
       download_url = @connection.get("/documents/#{@identifier}/download", params: params)['download_url']
       @connection.download(download_url, options[:filename])
@@ -38,11 +38,11 @@ module ToptranslationApi
     private
 
       def update_remote_document
-        @connection.patch("/documents/#{ @identifier }", remote_hash)
+        @connection.patch("/documents/#{@identifier}", remote_hash)
       end
 
       def create_remote_document
-        @connection.post("/documents", remote_hash)
+        @connection.post('/documents', remote_hash)
       end
 
       def update_and_return_from_response(response)

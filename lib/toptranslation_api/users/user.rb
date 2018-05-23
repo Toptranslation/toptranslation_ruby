@@ -2,7 +2,7 @@ module ToptranslationApi
   class User
     attr_reader :identifier, :first_name, :last_name, :name
 
-    def initialize(connection, options={})
+    def initialize(connection, options = {})
       @connection = connection
       @options = options
 
@@ -11,11 +11,11 @@ module ToptranslationApi
 
     private
 
-    def update_from_response(response)
-      @identifier = response['identifier'] if response['identifier']
-      @first_name = response['first_name'] if response['first_name']
-      @first_name = response['last_name'] if response['last_name']
-      @name = response['name'] if response['name']
-    end
+      def update_from_response(response)
+        @identifier = response['identifier'] if response['identifier']
+        @first_name = response['first_name'] if response['first_name']
+        @first_name = response['last_name'] if response['last_name']
+        @name = response['name'] if response['name']
+      end
   end
 end
