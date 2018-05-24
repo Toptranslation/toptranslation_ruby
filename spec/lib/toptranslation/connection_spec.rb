@@ -33,6 +33,23 @@ RSpec.describe Toptranslation::Connection do
     it 'returns the data object from the API response' do
       expect(get).to eq('foo' => 'bar')
     end
+
+    context 'when version 2 option is given' do
+      subject(:get) { connection.get('/foo', version: 2, params: { bar: 'baz' }) }
+
+      let(:response) { { key: 'value', data: { a: 'b' } } }
+
+      it 'returns the whole JSON response' do
+        expect(get).to eq('key' => 'value', 'data' => { 'a' => 'b' })
+      end
+
+      it 'sends the get request to the v2 API' do
+        get
+        expect(RestClient)
+          .to have_received(:get)
+          .with('https://api.toptranslation.com/v2/foo', params: { bar: 'baz', access_token: 'token' })
+      end
+    end
   end
 
   describe '#post' do
@@ -67,6 +84,23 @@ RSpec.describe Toptranslation::Connection do
     it 'returns the data object from the API response' do
       expect(post).to eq('foo' => 'bar')
     end
+
+    context 'when version 2 option is given' do
+      subject(:post) { connection.post('/foo', version: 2, params: { bar: 'baz' }) }
+
+      let(:response) { { key: 'value', data: { a: 'b' } } }
+
+      it 'returns the whole JSON response' do
+        expect(post).to eq('key' => 'value', 'data' => { 'a' => 'b' })
+      end
+
+      it 'sends the post request to the v2 API' do
+        post
+        expect(RestClient)
+          .to have_received(:post)
+          .with('https://api.toptranslation.com/v2/foo', params: { bar: 'baz' }, access_token: 'token')
+      end
+    end
   end
 
   describe '#patch' do
@@ -100,6 +134,23 @@ RSpec.describe Toptranslation::Connection do
 
     it 'returns the data object from the API response' do
       expect(patch).to eq('foo' => 'bar')
+    end
+
+    context 'when version 2 option is given' do
+      subject(:patch) { connection.patch('/foo', version: 2, params: { bar: 'baz' }) }
+
+      let(:response) { { key: 'value', data: { a: 'b' } } }
+
+      it 'returns the whole JSON response' do
+        expect(patch).to eq('key' => 'value', 'data' => { 'a' => 'b' })
+      end
+
+      it 'sends the patch request to the v2 API' do
+        patch
+        expect(RestClient)
+          .to have_received(:patch)
+          .with('https://api.toptranslation.com/v2/foo', params: { bar: 'baz' }, access_token: 'token')
+      end
     end
   end
 
