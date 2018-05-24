@@ -2,23 +2,23 @@ module Toptranslation
   class Connection
     attr_accessor :upload_token, :verbose
 
-    def initialize(options)
+    def initialize(options = {})
       @base_url = options[:base_url] || 'https://api.toptranslation.com/v0'
       @files_url = options[:files_url] || 'https://files.toptranslation.com'
       @access_token = options[:access_token] || sign_in(options)
       @verbose = options[:verbose] || false
     end
 
-    def get(uri, options = {})
-      transform_response(request(:get, uri, options))
+    def get(path, options = {})
+      transform_response(request(:get, path, options))
     end
 
-    def post(uri, options = {})
-      transform_response(request(:post, uri, options))
+    def post(path, options = {})
+      transform_response(request(:post, path, options))
     end
 
-    def patch(uri, options = {})
-      transform_response(request(:patch, uri, options))
+    def patch(path, options = {})
+      transform_response(request(:patch, path, options))
     end
 
     def download(url, _filename)
@@ -40,8 +40,8 @@ module Toptranslation
 
     private
 
-      def request(method, uri, options)
-        url = "#{@base_url}#{uri}"
+      def request(method, path, options)
+        url = "#{@base_url}#{path}"
         puts "# #{method}-request #{url}" if @verbose
         puts "options: #{prepare_request_options(options, method)}" if @verbose
         RestClient.send(method, url, prepare_request_options(options, method))
