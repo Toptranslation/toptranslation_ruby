@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class String
     attr_reader :identifier, :updated_at, :created_at
     attr_accessor :value, :state, :project_identifier, :document_identifier, :key, :comment, :context, :array_index, :plural_form, :locale_code

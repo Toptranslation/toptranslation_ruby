@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class Document
     attr_reader :identifier, :string_count, :has_missing_strings, :translations, :updated_at, :created_at
     attr_accessor :name, :path

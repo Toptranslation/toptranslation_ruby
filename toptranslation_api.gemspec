@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
-require 'toptranslation_api/version'
+require 'toptranslation/version'
 
 Gem::Specification.new do |s|
   s.name        = 'toptranslation_api'

@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class ReferenceDocument
     attr_reader :identifier, :filename, :filesize, :mime_type, :comment, :created_at
 

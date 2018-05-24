@@ -9,12 +9,12 @@
 # Offense count: 1
 Lint/DuplicateMethods:
   Exclude:
-    - 'lib/toptranslation_api/api/connection.rb'
+    - 'lib/toptranslation/connection.rb'
 
 # Offense count: 1
 Lint/UselessAssignment:
   Exclude:
-    - 'lib/toptranslation_api/documents/document.rb'
+    - 'lib/toptranslation/resource/document.rb'
 
 # Offense count: 6
 Metrics/AbcSize:
@@ -42,24 +42,24 @@ Metrics/PerceivedComplexity:
 # Offense count: 4
 Naming/MemoizedInstanceVariableName:
   Exclude:
-    - 'lib/toptranslation_api/api/client.rb'
+    - 'lib/toptranslation/client.rb'
 
 # Offense count: 13
 Style/DateTime:
   Exclude:
-    - 'lib/toptranslation_api/documents/document.rb'
-    - 'lib/toptranslation_api/orders/order.rb'
-    - 'lib/toptranslation_api/projects/project.rb'
-    - 'lib/toptranslation_api/quotes/quote.rb'
-    - 'lib/toptranslation_api/reference_documents/reference_document.rb'
-    - 'lib/toptranslation_api/strings/string.rb'
-    - 'lib/toptranslation_api/translations/translation.rb'
+    - 'lib/toptranslation/resource/document.rb'
+    - 'lib/toptranslation/resource/order.rb'
+    - 'lib/toptranslation/resource/project.rb'
+    - 'lib/toptranslation/resource/quote.rb'
+    - 'lib/toptranslation/resource/reference_document.rb'
+    - 'lib/toptranslation/resource/string.rb'
+    - 'lib/toptranslation/resource/translation.rb'
 
 # Offense count: 5
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
-    - 'lib/toptranslation_api/documents/document.rb'
-    - 'lib/toptranslation_api/orders/order.rb'
-    - 'lib/toptranslation_api/projects/project.rb'
-    - 'lib/toptranslation_api/strings/string.rb'
+    - 'lib/toptranslation/resource/document.rb'
+    - 'lib/toptranslation/resource/order.rb'
+    - 'lib/toptranslation/resource/project.rb'
+    - 'lib/toptranslation/resource/string.rb'

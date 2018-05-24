@@ -7,13 +7,13 @@ A ruby wrapper for the Toptranslation API.
 Authenticate with access token
 
 ```
-client = ToptranslationApi.new(access_token: 'access_token')
+client = Toptranslation.new(access_token: 'access_token')
 ```
 
 or authenticate by email and password
 
 ```
-client = ToptranslationApi.new(email: 'me@example.com', password: 'foobar')
+client = Toptranslation.new(email: 'me@example.com', password: 'foobar')
 ```
 
 ### Orders

@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation
   class Connection
     attr_accessor :upload_token, :verbose
 

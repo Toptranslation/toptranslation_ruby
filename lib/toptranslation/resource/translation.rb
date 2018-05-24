@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class Translation
     attr_reader :identifier, :filename, :filesize, :mime_type, :updated_at, :created_at,
                 :progress, :sha1, :locale, :external_checksum, :segments_sha1
