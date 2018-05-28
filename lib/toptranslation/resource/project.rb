@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class Project
     attr_reader :identifier, :created_at, :locales, :source_locale
     attr_accessor :name

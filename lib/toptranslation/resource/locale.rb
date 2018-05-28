@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class Locale
     attr_reader :name, :code, :custom_code
 

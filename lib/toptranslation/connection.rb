@@ -1,24 +1,24 @@
-module ToptranslationApi
+module Toptranslation
   class Connection
     attr_accessor :upload_token, :verbose
 
-    def initialize(options)
-      @base_url = options[:base_url] || 'https://api.toptranslation.com/v0'
+    def initialize(options = {})
+      @base_url = options[:base_url] || 'https://api.toptranslation.com'
       @files_url = options[:files_url] || 'https://files.toptranslation.com'
       @access_token = options[:access_token] || sign_in(options)
       @verbose = options[:verbose] || false
     end
 
-    def get(uri, options = {})
-      transform_response(request(:get, uri, options))
+    def get(path, options = {})
+      transform_response(request(:get, path, options), options)
     end
 
-    def post(uri, options = {})
-      transform_response(request(:post, uri, options))
+    def post(path, options = {})
+      transform_response(request(:post, path, options), options)
     end
 
-    def patch(uri, options = {})
-      transform_response(request(:patch, uri, options))
+    def patch(path, options = {})
+      transform_response(request(:patch, path, options), options)
     end
 
     def download(url, _filename)
@@ -35,13 +35,17 @@ module ToptranslationApi
         token: upload_token
       )
 
-      transform_response(response)
+      transform_response(response, version: 0)
     end
 
     private
 
-      def request(method, uri, options)
-        url = "#{@base_url}#{uri}"
+      def version(options)
+        options[:version] || 0
+      end
+
+      def request(method, path, options)
+        url = "#{@base_url}/v#{version(options)}#{path}"
         puts "# #{method}-request #{url}" if @verbose
         puts "options: #{prepare_request_options(options, method)}" if @verbose
         RestClient.send(method, url, prepare_request_options(options, method))
@@ -74,17 +78,24 @@ module ToptranslationApi
         access_token
       end
 
-      def transform_response(response)
+      def transform_response(response, options)
         puts response if @verbose
-        JSON.parse(response)['data']
+        parsed = JSON.parse(response)
+        if version(options) == 2
+          parsed
+        else
+          parsed['data']
+        end
       end
 
       def prepare_request_options(options, method)
+        request_options = options.dup
+        request_options.delete(:version)
         if %i[post patch].include? method
-          options.merge!(auth_params)
+          request_options.merge(auth_params)
         else
           params = options[:params] || {}
-          options.merge!(params: params.merge!(auth_params))
+          request_options.merge(params: params.merge(auth_params))
         end
       end
 

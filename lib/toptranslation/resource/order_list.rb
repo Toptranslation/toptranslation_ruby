@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class OrderList
     include Enumerable
 

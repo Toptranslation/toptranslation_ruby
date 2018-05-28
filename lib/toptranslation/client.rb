@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation
   class Client
     def initialize(options)
       @connection = ToptranslationApi::Connection.new(options)

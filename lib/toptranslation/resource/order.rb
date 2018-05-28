@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class Order
     attr_reader :identifier, :state, :created_at,
                 :requested_at, :ordered_at, :estimated_delivery_date,

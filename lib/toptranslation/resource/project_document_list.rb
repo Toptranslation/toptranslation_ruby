@@ -1,4 +1,4 @@
-module ToptranslationApi
+module Toptranslation::Resource
   class ProjectDocumentList < DocumentList
     def create(name, path, options = {})
       response = @connection.post("/projects/#{@options[:project_identifier]}/documents", options.merge(name: name, path: path))
