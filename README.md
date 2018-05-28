@@ -2,6 +2,8 @@
 
 A ruby wrapper for the Toptranslation API.
 
+[![Build Status](https://travis-ci.org/Toptranslation/toptranslation_ruby.svg?branch=master)](https://travis-ci.org/Toptranslation/toptranslation_ruby)
+
 ## Usage
 ### Authentication
 Authenticate with access token
