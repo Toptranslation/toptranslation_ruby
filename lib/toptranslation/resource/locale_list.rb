@@ -19,7 +19,7 @@ module Toptranslation::Resource
     private
 
       def locales
-        @connection.get('/locales')
+        @connection.get('/locales', version: 2)
       end
   end
 end
