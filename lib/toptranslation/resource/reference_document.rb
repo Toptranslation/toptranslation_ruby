@@ -9,11 +9,11 @@ module Toptranslation::Resource
     end
 
     def download
-      @connection.download(download_url, @filename)
+      @connection.download(download_url)
     end
 
     def download_url
-      @download_url ||= @connection.get("/reference_documents/#{identifier}/download")['download_url']
+      @download_url ||= @connection.get("/reference_documents/#{identifier}/download", version: 2)['download_url']
     end
 
     private
@@ -24,7 +24,7 @@ module Toptranslation::Resource
         @filesize = response['filesize'] if response['filesize']
         @mime_type = response['mime_type'] if response['mime_type']
         @comment = response['comment'] if response['comment']
-        @created_at = DateTime.parse(response['created_at']) if response['created_at']
+        @created_at = Time.parse(response['created_at']) if response['created_at']
       end
   end
 end

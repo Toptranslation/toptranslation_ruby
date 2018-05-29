@@ -155,7 +155,7 @@ RSpec.describe Toptranslation::Connection do
   end
 
   describe '#download' do
-    subject(:download) { connection.download('https://example.com/some-file', 'file-name.pdf') }
+    subject(:download) { connection.download('https://example.com/some-file') }
 
     let(:response) { instance_double(RestClient::RawResponse, file: file) }
     let(:file) { instance_double(File) }
