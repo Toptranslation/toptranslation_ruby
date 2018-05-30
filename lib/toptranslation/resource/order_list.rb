@@ -8,12 +8,12 @@ module Toptranslation::Resource
     end
 
     def find(identifier)
-      result = @connection.get("/orders/#{identifier}")
-      ToptranslationApi::Order.new(@connection, result)
+      result = @connection.get("/orders/#{identifier}", version: 2)
+      Order.new(@connection, result)
     end
 
     def create(options = {})
-      ToptranslationApi::Order.new(@connection, options)
+      Order.new(@connection, options)
     end
 
     def each
@@ -23,7 +23,7 @@ module Toptranslation::Resource
     private
 
       def orders
-        @connection.get('/orders')
+        @connection.get('/orders', version: 2)
       end
   end
 end
