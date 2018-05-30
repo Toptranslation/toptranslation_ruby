@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'toptranslation_api'
+
+options = {}.tap do |o|
+  o[:access_token] = ENV.fetch('ACCESS_TOKEN', 'change_me')
+  o[:base_url] = ENV['BASE_URL'] if ENV['BASE_URL']
+  o[:files_url] = ENV['FILES_URL'] if ENV['FILES_URL']
+  o[:verbose] = ENV['VERBOSE']
+end
+
+client = Toptranslation::Client.new(options)
+
+puts <<-MSG.split("\n").map(&:lstrip)
+  To experiment with the API we have initialized an API client for you:
+  client = #{client}
+
+  You can specify an access token by setting the ENV variable ACCESS_TOKEN.
+MSG
+
+require 'pry'
+Pry.start(self)
