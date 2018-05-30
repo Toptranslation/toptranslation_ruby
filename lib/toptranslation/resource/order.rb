@@ -15,6 +15,8 @@ module Toptranslation::Resource
       @service_level = @options[:service_level]
       @desired_delivery_date = @options[:desired_delivery_date]
       @quote_required = @options[:quote_required]
+      @delivery_date = nil
+      @identifier = nil
 
       update_from_response(options)
     end
@@ -24,33 +26,32 @@ module Toptranslation::Resource
                                   document_store_id: document_store_id,
                                   document_token: document_token,
                                   source_locale_code: source_locale_code,
-                                  target_locale_codes: target_locale_codes)
+                                  target_locale_codes: target_locale_codes,
+                                  version: 2)
 
-      ToptranslationApi::Document.new(@connection, response)
+      Document.new(@connection, response)
     end
 
     def upload_document(filepath, source_locale_code, target_locale_codes)
-      upload = ToptranslationApi::Upload.new(@connection).upload(filepath)
+      upload = Upload.new(@connection).upload(filepath)
 
       add_document(upload.document_store_id, upload.document_token, source_locale_code, target_locale_codes)
     end
 
     def documents
-      @connection.get "orders/#{@identifier}/documents"
+      @connection.get("/orders/#{@identifier}/documents", version: 2)
     end
 
     def quotes
-      @quotes ||= @options['quotes'].inject([]) do |accu, quote|
-        accu << ToptranslationApi::Quote.new(@connection, quote)
-      end
+      @quotes ||= @options['quotes'].map { |quote| Quote.new(@connection, quote) }
     end
 
     def translations
-      ToptranslationApi::TranslationList.new(@connection, order_identifier: @identifier)
+      TranslationList.new(@connection, order_identifier: @identifier)
     end
 
     def creator
-      @creator ||= ToptranslationApi::User.new(@connection, @options['creator'])
+      @creator ||= User.new(@connection, @options['creator'])
     end
 
     def save
@@ -59,18 +60,18 @@ module Toptranslation::Resource
     end
 
     def request
-      response = @connection.patch("/orders/#{@identifier}/request")
+      response = @connection.patch("/orders/#{@identifier}/request", version: 2)
       update_and_return_from_response(response)
     end
 
     private
 
       def update_remote_order
-        @connection.patch("/orders/#{@identifier}", remote_hash)
+        @connection.patch("/orders/#{@identifier}", remote_hash.merge(version: 2))
       end
 
       def create_remote_order
-        @connection.post('/orders', remote_hash)
+        @connection.post('/orders', remote_hash.merge(version: 2))
       end
 
       def update_and_return_from_response(response)
@@ -83,9 +84,9 @@ module Toptranslation::Resource
       def update_from_response(response)
         @identifier = response['identifier'] if response['identifier']
         @state = response['state'] if response['state']
-        @created_at = DateTime.parse(response['created_at']) if response['created_at']
-        @ordered_at = DateTime.parse(response['ordered_at']) if response['ordered_at']
-        @estimated_delivery_date = DateTime.parse(response['estimated_delivery_date']) if response['estimated_delivery_date']
+        @created_at = Time.parse(response['created_at']) if response['created_at']
+        @ordered_at = Time.parse(response['ordered_at']) if response['ordered_at']
+        @estimated_delivery_date = Time.parse(response['estimated_delivery_date']) if response['estimated_delivery_date']
         @name = response['name'] if response['name']
         @reference = response['reference'] if response['reference']
         @comment = response['comment'] if response['comment']

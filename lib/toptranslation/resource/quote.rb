@@ -10,11 +10,11 @@ module Toptranslation::Resource
     end
 
     def accept
-      @connection.patch("/quotes/#{identifier}/accept")
+      @connection.patch("/quotes/#{identifier}/accept", version: 2)
     end
 
     def reject(reason = nil)
-      @connection.patch("/quotes/#{identifier}/reject", reason: reason)
+      @connection.patch("/quotes/#{identifier}/reject", reason: reason, version: 2)
     end
 
     private
@@ -24,8 +24,8 @@ module Toptranslation::Resource
         @state = response['state'] if response['state']
         @product = response['product'] if response['product']
         @value = response['value'] if response['value']
-        @estimated_delivery_date = DateTime.parse(response['estimated_delivery_date']) if response['estimated_delivery_date']
-        @created_at = DateTime.parse(response['created_at']) if response['created_at']
+        @estimated_delivery_date = Time.parse(response['estimated_delivery_date']) if response['estimated_delivery_date']
+        @created_at = Time.parse(response['created_at']) if response['created_at']
       end
   end
 end
