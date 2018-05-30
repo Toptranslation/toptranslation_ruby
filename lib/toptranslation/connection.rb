@@ -21,7 +21,7 @@ module Toptranslation
       transform_response(request(:patch, path, options), options)
     end
 
-    def download(url, _filename)
+    def download(url)
       puts "# downloading #{url}" if @verbose
       raw = RestClient::Request.execute(method: :get, url: url, raw_response: true)
       raw.file
