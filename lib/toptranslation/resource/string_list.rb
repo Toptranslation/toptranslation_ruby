@@ -9,7 +9,7 @@ module Toptranslation::Resource
 
     def find(identifier)
       result = @connection.get("/strings/#{identifier}")
-      ToptranslationApi::Document.new(@connection, result)
+      Document.new(@connection, result)
     end
 
     def each
@@ -20,7 +20,7 @@ module Toptranslation::Resource
       project_identifier = options['project_identifier'] || @options[:project_identifier]
       document_identifier = options['document_identifier'] || @options[:document_identifier]
 
-      ToptranslationApi::String.new(@connection, options.merge('project_identifier' => project_identifier, 'document_identifier' => document_identifier))
+      String.new(@connection, options.merge('project_identifier' => project_identifier, 'document_identifier' => document_identifier))
     end
 
     private

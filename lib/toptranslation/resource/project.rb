@@ -28,11 +28,11 @@ module Toptranslation::Resource
     end
 
     def documents
-      ToptranslationApi::ProjectDocumentList.new(@connection, project_identifier: @identifier)
+      ProjectDocumentList.new(@connection, project_identifier: @identifier)
     end
 
     def strings
-      ToptranslationApi::StringList.new(@connection, project_identifier: @identifier)
+      StringList.new(@connection, project_identifier: @identifier)
     end
 
     def save

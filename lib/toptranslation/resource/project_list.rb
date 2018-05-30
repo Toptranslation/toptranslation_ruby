@@ -9,11 +9,11 @@ module Toptranslation::Resource
 
     def find(identifier)
       result = @connection.get("/projects/#{identifier}")
-      ToptranslationApi::Project.new(@connection, result)
+      Project.new(@connection, result)
     end
 
     def create(options = {})
-      ToptranslationApi::Project.new(@connection, options)
+      Project.new(@connection, options)
     end
 
     def each
