@@ -32,7 +32,7 @@ module Toptranslation::Resource
     end
 
     def strings
-      ToptranslationApi::StringList.new(@connection, document_identifier: @identifier)
+      StringList.new(@connection, document_identifier: @identifier)
     end
 
     private
