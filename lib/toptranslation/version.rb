@@ -1,3 +1,3 @@
 module Toptranslation
-  VERSION = '0.7.23'.freeze
+  VERSION = '2.0.0'.freeze
 end
