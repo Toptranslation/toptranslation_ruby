@@ -51,6 +51,7 @@ module Toptranslation
         RestClient.send(method, url, prepare_request_options(options, method))
       rescue RestClient::ExceptionWithResponse => e
         puts e.response if @verbose
+        raise e
       end
 
       def upload_token

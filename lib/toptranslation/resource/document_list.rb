@@ -9,7 +9,7 @@ module Toptranslation::Resource
 
     def find(identifier)
       result = @connection.get("/documents/#{identifier}")
-      ToptranslationApi::Document.new(@connection, result)
+      Document.new(@connection, result)
     end
 
     def each

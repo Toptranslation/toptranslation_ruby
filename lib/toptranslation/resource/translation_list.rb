@@ -9,11 +9,11 @@ module Toptranslation::Resource
 
     def find(identifier)
       result = @connection.get("/translations/#{identifier}")
-      ToptranslationApi::Translation.new(@connection, result)
+      Translation.new(@connection, result)
     end
 
     def each
-      translations.each { |translation| yield ToptranslationApi::Translation.new(@connection, translation) }
+      translations.each { |translation| yield Translation.new(@connection, translation) }
     end
 
     private

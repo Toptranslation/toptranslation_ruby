@@ -5,7 +5,7 @@ require 'toptranslation/version'
 
 Gem::Specification.new do |s|
   s.name        = 'toptranslation_api'
-  s.version     = ToptranslationApi::VERSION
+  s.version     = Toptranslation::VERSION
   s.summary     = 'A ruby client for the Toptranslation API'
   s.description = 'Allows to create and control translation projects on Toptranslation via the Toptranslation API.'
   s.authors     = ['Toptranslation GmbH']
