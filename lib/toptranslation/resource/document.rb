@@ -1,6 +1,6 @@
 module Toptranslation::Resource
   class Document
-    attr_reader :identifier, :string_count, :has_missing_strings, :translations, :updated_at, :created_at
+    attr_reader :identifier, :string_count, :has_missing_strings, :translations, :updated_at, :created_at, :sha1
     attr_accessor :name, :path
 
     def initialize(connection, options = {})
@@ -58,6 +58,7 @@ module Toptranslation::Resource
         @path = response['path'] if response['path']
         @string_count = response['string_count'] if response['string_count']
         @has_missing_strings = response['has_missing_strings'] if response['has_missing_strings']
+        @sha1 = response['sha1'] if response['sha1']
         @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
         @created_at = DateTime.parse(response['created_at']) if response['created_at']
         if response['translations']
