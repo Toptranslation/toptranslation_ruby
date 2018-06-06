@@ -23,18 +23,6 @@ RSpec.describe Toptranslation::Resource::Document do
       document_token: 'abcdefg'
     )
   end
-
-
-  before do
-    allow(connection).to receive(:get).and_return('download_url' => download_url)
-    allow(connection).to receive(:post) { options }
-    allow(connection).to receive(:patch) { options }
-    allow(connection).to receive(:download) { response }
-    allow(Toptranslation::Resource::Upload).to receive(:new) { upload }
-    allow(Toptranslation::Resource::StringList).to receive(:new)
-    allow(upload).to receive(:upload) { upload }
-  end
-
   let(:expected_attributes) do
     {
       identifier: 'abc',
@@ -46,8 +34,18 @@ RSpec.describe Toptranslation::Resource::Document do
       created_at: Time.parse('2002-02-03T04:05:06+07:00')
     }
   end
-  describe '#initialize' do
 
+  before do
+    allow(connection).to receive(:get).and_return('download_url' => download_url)
+    allow(connection).to receive(:post) { options }
+    allow(connection).to receive(:patch) { options }
+    allow(connection).to receive(:download) { response }
+    allow(Toptranslation::Resource::Upload).to receive(:new) { upload }
+    allow(Toptranslation::Resource::StringList).to receive(:new)
+    allow(upload).to receive(:upload) { upload }
+  end
+
+  describe '#initialize' do
     it 'populates all the attr_readers from the options hash' do
       expect(document).to have_attributes(expected_attributes)
     end
@@ -112,8 +110,8 @@ RSpec.describe Toptranslation::Resource::Document do
     end
   end
 
-  describe '#save'  do
-    let(:remote_hash) { {:name=>"test.txt"} }
+  describe '#save' do
+    let(:remote_hash) { { name: 'test.txt' } }
     let(:new_document_options) do
       {
         'identifier' => nil,
@@ -139,7 +137,7 @@ RSpec.describe Toptranslation::Resource::Document do
       new_document.save
       expect(connection)
         .to have_received(:post)
-        .with("/documents", remote_hash)
+        .with('/documents', remote_hash)
     end
 
     it 'populates all the attr_readers from the response' do
@@ -147,7 +145,7 @@ RSpec.describe Toptranslation::Resource::Document do
     end
   end
 
-  describe '#strings'  do
+  describe '#strings' do
     it 'call StringList.new' do
       document.strings
       expect(Toptranslation::Resource::StringList)
