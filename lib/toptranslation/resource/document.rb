@@ -59,8 +59,8 @@ module Toptranslation::Resource
         @string_count = response['string_count'] if response['string_count']
         @has_missing_strings = response['has_missing_strings'] if response['has_missing_strings']
         @sha1 = response['sha1'] if response['sha1']
-        @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
-        @created_at = DateTime.parse(response['created_at']) if response['created_at']
+        @updated_at = Time.parse(response['updated_at']) if response['updated_at']
+        @created_at = Time.parse(response['created_at']) if response['created_at']
         if response['translations']
           @translations = response['translations'].inject([]) do |accu, translation|
             accu << Translation.new(@connection, translation)
