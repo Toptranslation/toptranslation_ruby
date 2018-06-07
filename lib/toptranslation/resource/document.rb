@@ -5,8 +5,6 @@ module Toptranslation::Resource
 
     def initialize(connection, options = {})
       @connection = connection
-      @options = options
-
       update_from_response(options)
     end
 
@@ -27,7 +25,7 @@ module Toptranslation::Resource
     end
 
     def save
-      response = @identifier ? update_remote_document : create_remote_document
+      response = @connection.patch("/documents/#{@identifier}", remote_hash)
       update_and_return_from_response(response)
     end
 
@@ -36,14 +34,6 @@ module Toptranslation::Resource
     end
 
     private
-
-      def update_remote_document
-        @connection.patch("/documents/#{@identifier}", remote_hash)
-      end
-
-      def create_remote_document
-        @connection.post('/documents', remote_hash)
-      end
 
       def update_and_return_from_response(response)
         if response

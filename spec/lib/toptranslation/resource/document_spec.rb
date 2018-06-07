@@ -112,32 +112,12 @@ RSpec.describe Toptranslation::Resource::Document do
 
   describe '#save' do
     let(:remote_hash) { { name: 'test.txt' } }
-    let(:new_document_options) do
-      {
-        'identifier' => nil,
-        'name' => 'test.txt',
-        'path' => 'foo/bar',
-        'string_count' => 1337,
-        'has_missing_strings' => true,
-        'updated_at' => '2002-02-03T04:05:06+07:00',
-        'created_at' => '2002-02-03T04:05:06+07:00'
-      }
-    end
-
-    let(:new_document) { described_class.new(connection, new_document_options) }
 
     it 'updates the remote document' do
       document.save
       expect(connection)
         .to have_received(:patch)
         .with("/documents/#{options['identifier']}", remote_hash)
-    end
-
-    it 'creates a remote document' do
-      new_document.save
-      expect(connection)
-        .to have_received(:post)
-        .with('/documents', remote_hash)
     end
 
     it 'populates all the attr_readers from the response' do
