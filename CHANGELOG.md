@@ -1,3 +1,12 @@
+<a name="v2.2.0"></a>
+### v2.2.0 (2018-06-08)
+
+
+#### Features
+
+* add Document#download_url	 ([8ac86c6](/../../commit/8ac86c6))
+
+
 <a name="v2.1.0"></a>
 ### v2.1.0 (2018-06-06)
 
