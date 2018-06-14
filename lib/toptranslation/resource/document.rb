@@ -18,10 +18,13 @@ module Toptranslation::Resource
                                                                             ))
     end
 
-    def download(locale_code, options = {})
+    def download_url(locale_code, options = {})
       params = { file_format: options[:file_format], locale_code: locale_code }.compact
-      download_url = @connection.get("/documents/#{@identifier}/download", params: params)['download_url']
-      @connection.download(download_url)
+      @connection.get("/documents/#{@identifier}/download", params: params)['download_url']
+    end
+
+    def download(locale_code, options = {})
+      @connection.download(download_url(locale_code, options))
     end
 
     def save
