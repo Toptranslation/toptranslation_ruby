@@ -5,8 +5,6 @@ module Toptranslation::Resource
 
     def initialize(connection, options = {})
       @connection = connection
-      @options = options
-
       update_from_response(options)
     end
 
@@ -30,7 +28,7 @@ module Toptranslation::Resource
     end
 
     def save
-      response = @identifier ? update_remote_document : create_remote_document
+      response = @connection.patch("/documents/#{@identifier}", remote_hash)
       update_and_return_from_response(response)
     end
 
@@ -39,14 +37,6 @@ module Toptranslation::Resource
     end
 
     private
-
-      def update_remote_document
-        @connection.patch("/documents/#{@identifier}", remote_hash)
-      end
-
-      def create_remote_document
-        @connection.post('/documents', remote_hash)
-      end
 
       def update_and_return_from_response(response)
         if response
@@ -62,8 +52,8 @@ module Toptranslation::Resource
         @string_count = response['string_count'] if response['string_count']
         @has_missing_strings = response['has_missing_strings'] if response['has_missing_strings']
         @sha1 = response['sha1'] if response['sha1']
-        @updated_at = DateTime.parse(response['updated_at']) if response['updated_at']
-        @created_at = DateTime.parse(response['created_at']) if response['created_at']
+        @updated_at = Time.parse(response['updated_at']) if response['updated_at']
+        @created_at = Time.parse(response['created_at']) if response['created_at']
         if response['translations']
           @translations = response['translations'].inject([]) do |accu, translation|
             accu << Translation.new(@connection, translation)
