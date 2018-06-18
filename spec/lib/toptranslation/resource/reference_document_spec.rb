@@ -52,7 +52,7 @@ RSpec.describe Toptranslation::Resource::ReferenceDocument do
       download
       expect(connection)
         .to have_received(:download)
-        .with('https://example.com/important.txt')
+        .with('https://example.com/important.txt', String)
     end
 
     it 'returns the downloaded file' do

@@ -1,5 +1,6 @@
 require 'json'
 require 'rest-client'
+require 'net/http/uploadprogress'
 require 'toptranslation/client'
 require 'toptranslation/connection'
 require 'toptranslation/resource/document'

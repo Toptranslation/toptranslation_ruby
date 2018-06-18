@@ -106,7 +106,7 @@ RSpec.describe Toptranslation::Resource::Document do
       download
       expect(connection)
         .to have_received(:download)
-        .with(download_url)
+        .with(download_url, String)
     end
   end
 

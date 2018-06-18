@@ -155,20 +155,35 @@ RSpec.describe Toptranslation::Connection do
   end
 
   describe '#download' do
-    subject(:download) { connection.download('https://example.com/some-file') }
+    subject(:download) { connection.download(url, path) }
 
-    let(:response) { instance_double(RestClient::RawResponse, file: file) }
+    let(:url) { 'https://example.com/some-file' }
+    let(:path) { '/tmp/foo' }
+    let(:http) { instance_double(Net::HTTP) }
+    let(:response) { instance_double(Net::HTTPResponse) }
+    let(:content_length_response) { instance_double(Net::HTTPResponse) }
     let(:file) { instance_double(File) }
+    let(:data) { 'data' }
 
     before do
-      allow(RestClient::Request).to receive(:execute) { response }
+      allow(File).to receive(:open) { file }
+      allow(file).to receive(:write)
+      allow(Net::HTTP).to receive(:start).and_yield(http)
+      allow(http).to receive(:request_get).and_yield(response)
+      allow(http).to receive(:request_head) { content_length_response }
+      allow(response).to receive(:read_body).and_yield(data)
+      allow(content_length_response).to receive(:[]).with('content-length').and_return(4)
+      allow(content_length_response).to receive(:code).and_return('200')
     end
 
-    it 'sends a get for the given url, requesting a raw response' do
+    it 'yields the download progress and content length' do
+      expect { |b| connection.download(url, path, &b) }
+        .to yield_successive_args([nil, 4], [4, 4])
+    end
+
+    it 'writes the response body to a file at the given path' do
       download
-      expect(RestClient::Request)
-        .to have_received(:execute)
-        .with(method: :get, url: 'https://example.com/some-file', raw_response: true)
+      expect(file).to have_received(:write).with('data')
     end
 
     it 'returns the file from the raw response' do
@@ -177,53 +192,32 @@ RSpec.describe Toptranslation::Connection do
   end
 
   describe '#upload' do
-    subject(:upload) { connection.upload('some-file.pdf', 'document_type') }
+    subject(:upload) { connection.upload(file.path, 'document') }
 
-    let(:response) do
-      {
-        data: {
-          identifier: 'foo'
-        }
-      }
-    end
-
-    let(:token_response) do
-      {
-        data: {
-          upload_token: 'upload_token'
-        }
-      }
-    end
-
-    let(:file) { instance_double(File) }
+    let(:file) { File.open('test', 'w') }
 
     before do
-      allow(File).to receive(:new) { file }
-      allow(RestClient).to receive(:post).with(/files/, Hash) { response.to_json }
-      allow(RestClient).to receive(:post) { token_response.to_json }
+      # Unfortunately webmock does not call readpartial on the request body_stream.
+      # It calls read instead which is not implemented for Net::HTTP::UploadProgress.
+      Net::HTTP::UploadProgress.send(:define_method, :read) do
+        @io.read # rubocop:disable RSpec/InstanceVariable
+      end
+
+      # Deterministic multipart boundary. Otherwise the upload request's body will
+      # be different every time
+      allow(SecureRandom).to receive(:urlsafe_base64).with(40).and_return('a' * 53)
+
+      file << 'TEST DATA'
+      file.flush
     end
 
-    it 'opens the file from disk at the given path' do
+    after do
+      file.close
+      FileUtils.rm_f(file.path)
+    end
+
+    it 'uploads the file', vcr: true do
       upload
-      expect(File).to have_received(:new).with('some-file.pdf')
     end
-
-    it 'requests an upload token' do
-      upload
-      expect(RestClient)
-        .to have_received(:post)
-        .with('https://api.toptranslation.com/v0/upload_tokens', access_token: 'token')
-    end
-
-    it 'sends a post with the to the files api' do
-      upload
-      expect(RestClient)
-        .to have_received(:post)
-        .with('https://files.toptranslation.com/documents', file: file, type: 'document_type', token: 'upload_token')
-    end
-
-    # it 'returns the data object from the API response' do
-    #   expect(upload).to eq(identifier: 'foo')
-    # end
   end
 end

@@ -1,5 +1,5 @@
 module Toptranslation
-  class Connection
+  class Connection # rubocop:disable Metrics/ClassLength
     attr_accessor :upload_token, :verbose
 
     def initialize(options = {})
@@ -21,21 +21,16 @@ module Toptranslation
       transform_response(request(:patch, path, options), options)
     end
 
-    def download(url)
+    def download(url, path, &block)
       puts "# downloading #{url}" if @verbose
-      raw = RestClient::Request.execute(method: :get, url: url, raw_response: true)
-      raw.file
+      uri = URI.parse(url)
+      download_uri(uri, path, &block)
     end
 
-    def upload(filepath, type)
-      response = RestClient.post(
-        "#{@files_url}/documents",
-        file: File.new(filepath),
-        type: type,
-        token: upload_token
-      )
-
-      transform_response(response, version: 0)
+    def upload(filepath, type, &block)
+      uri = URI.parse("#{@files_url}/documents")
+      file = File.new(filepath)
+      upload_file(file, type, uri, &block)
     end
 
     private
@@ -102,6 +97,61 @@ module Toptranslation
 
       def auth_params
         { access_token: @access_token }
+      end
+
+      def download_content_length(http, uri)
+        sleep_time = 0.5
+        attempts = 0
+        total = nil
+
+        loop do
+          raise 'File not available' if attempts >= 10
+
+          head_response = http.request_head(uri.request_uri)
+          total = head_response['content-length'].to_i
+          break if head_response.code == '200'
+
+          attempts += 1
+          sleep sleep_time
+          sleep_time += sleep_time * 0.5
+        end
+
+        total
+      end
+
+      def download_uri(uri, path)
+        Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+          total = download_content_length(http, uri)
+          yield nil, total if block_given?
+
+          FileUtils.mkpath(File.dirname(path))
+          file = File.open(path, 'w')
+          http.request_get(uri.request_uri) do |response|
+            response.read_body do |data|
+              file.write(data)
+              yield data.length, total if block_given?
+            end
+          end
+          file
+        end
+      end
+
+      def upload_file(file, type, uri)
+        last_upload_size = 0
+
+        response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+          request = Net::HTTP::Post.new(uri)
+          request.set_form({ 'file' => file, 'token' => upload_token, 'type' => type }, 'multipart/form-data')
+
+          Net::HTTP::UploadProgress.new(request) do |progress|
+            yield progress.upload_size - last_upload_size if block_given?
+            last_upload_size = progress.upload_size
+          end
+
+          http.request(request)
+        end
+
+        transform_response(response.body, version: 0)
       end
   end
 end

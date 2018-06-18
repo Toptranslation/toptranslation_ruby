@@ -15,11 +15,13 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.add_runtime_dependency 'json', '~> 2.0'
+  s.add_runtime_dependency 'net-http-uploadprogress', '~> 2.0'
   s.add_runtime_dependency 'rest-client', '~> 2.0'
   s.add_development_dependency 'pry', '~> 0.11'
   s.add_development_dependency 'rake', '~> 12.3'
   s.add_development_dependency 'rspec', '~> 3.7'
   s.add_development_dependency 'rubocop', '~> 0.56.0'
   s.add_development_dependency 'rubocop-rspec', '~> 1.25.1'
+  s.add_development_dependency 'vcr', '~> 4.0'
   s.add_development_dependency 'webmock', '~> 3.4'
 end

@@ -7,9 +7,9 @@ module Toptranslation::Resource
       @options = options
     end
 
-    def upload(filepath, type = 'document')
+    def upload(filepath, type = 'document', &block)
       puts "# Uploading: #{filepath}" if @connection.verbose
-      response = @connection.upload(filepath, type)
+      response = @connection.upload(filepath, type, &block)
 
       @document_store_id = response['identifier']
       @document_token    = response['document_token']

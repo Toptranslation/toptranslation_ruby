@@ -8,8 +8,16 @@ module Toptranslation::Resource
       update_from_response(options)
     end
 
-    def download
-      @connection.download(download_url)
+    def download(options = {})
+      download_path = if options[:path]
+                        options[:path]
+                      else
+                        tempfile = Tempfile.new
+                        temp_path = tempfile.path
+                        tempfile.close
+                        temp_path
+                      end
+      @connection.download(download_url, download_path)
     end
 
     def download_url

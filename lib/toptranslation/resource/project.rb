@@ -10,8 +10,8 @@ module Toptranslation::Resource
       update_from_response(options)
     end
 
-    def upload_document(filepath, locale_code, options = {})
-      upload = Upload.new(@connection).upload(filepath)
+    def upload_document(filepath, locale_code, options = {}, &block)
+      upload = Upload.new(@connection).upload(filepath, &block)
 
       attr_hash = {
         document_store_id: upload.document_store_id,
