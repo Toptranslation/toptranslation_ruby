@@ -1,3 +1,12 @@
+<a name="v2.3.0"></a>
+### v2.3.0 (2018-06-18)
+
+
+#### Features
+
+* report progress for upload and download	 ([8a31a01](/../../commit/8a31a01))
+
+
 <a name="v2.2.0"></a>
 ### v2.2.0 (2018-06-08)
 
