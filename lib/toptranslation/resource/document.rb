@@ -23,8 +23,16 @@ module Toptranslation::Resource
       @connection.get("/documents/#{@identifier}/download", params: params)['download_url']
     end
 
-    def download(locale_code, options = {})
-      @connection.download(download_url(locale_code, options))
+    def download(locale_code, options = {}, &block)
+      download_path = if options[:path]
+                        options[:path]
+                      else
+                        tempfile = Tempfile.new
+                        temp_path = tempfile.path
+                        tempfile.close
+                        temp_path
+                      end
+      @connection.download(download_url(locale_code, options), download_path, &block)
     end
 
     def save

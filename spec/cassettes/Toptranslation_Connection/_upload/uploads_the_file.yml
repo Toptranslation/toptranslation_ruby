@@ -1,0 +1,115 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.toptranslation.com/v0/upload_tokens
+    body:
+      encoding: UTF-8
+      string: access_token=token
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (darwin16.7.0 x86_64) ruby/2.4.2p198
+      Content-Length:
+      - '77'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.toptranslation.com
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 19 Jun 2018 09:42:44 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Content-Type:
+      - application/json
+      Etag:
+      - W/"1aae67a0f7eda1382def0568339dafcb"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e58bb5b1-e27c-410f-b4bb-9356e10f3ccf
+      X-Runtime:
+      - '0.024493'
+      Vary:
+      - Origin
+      Content-Length:
+      - '290'
+      Set-Cookie:
+      - SERVERID=eden; path=/
+    body:
+      encoding: UTF-8
+      string: '{"meta":{"status":{"code":201}},"data":{"upload_token":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUb3B0cmFuc2xhdGlvbiBHbWJIIiwiaWF0IjoiMTUyOTQwMTM2NCIsImFwcF9pZCI6InBvbGx1eCIsImRvY3VtZW50X2lkIjoic25Qd1E3cDBCQjhBN3RqMEtEemQrdz09IiwiZXhwIjoxNTI5NTEzNjY0fQ.signature"}}'
+    http_version:
+  recorded_at: Sun, 31 Dec 2017 23:00:00 GMT
+- request:
+    method: post
+    uri: https://files.toptranslation.com/documents
+    body:
+      encoding: ASCII-8BIT
+      string: "--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\nContent-Disposition:
+        form-data; name=\"file\"; filename=\"test\"\r\nContent-Type: application/octet-stream\r\n\r\nTEST
+        DATA\r\n--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\nContent-Disposition:
+        form-data; name=\"token\"\r\n\r\neyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUb3B0cmFuc2xhdGlvbiBHbWJIIiwiaWF0IjoiMTUyOTQwMTM2NCIsImFwcF9pZCI6InBvbGx1eCIsImRvY3VtZW50X2lkIjoic25Qd1E3cDBCQjhBN3RqMEtEemQrdz09IiwiZXhwIjoxNTI5NTEzNjY0fQ.signature\r\n--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\nContent-Disposition:
+        form-data; name=\"type\"\r\n\r\ndocument\r\n--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa--\r\n"
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - files.toptranslation.com
+      Content-Type:
+      - multipart/form-data; boundary=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      Content-Length:
+      - '683'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 19 Jun 2018 09:42:45 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      Etag:
+      - W/"7b97deac57bc79f718961dbb62015bb9"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e83f371f-57ce-4404-8c0a-3baafa8a66b8
+      X-Runtime:
+      - '1.051443'
+      Transfer-Encoding:
+      - chunked
+      Set-Cookie:
+      - SERVERID=vergon; path=/
+    body:
+      encoding: UTF-8
+      string: '{"data":{"identifier":"42f58ce7-9bfe-4615-9553-f9dcdb3236ff","filename":"test","filesize":9,"mime_type":"application/octet-stream","document_type":"document","words":2,"lines":1,"characters":9,"locale_code":"en","locale_name":"ENGLISH","created_at":"2018-06-19T09:42:45.000Z","excerpt":null,"sha1":"1b33ad54d78085be5ecb1cf1b3e9da821e708075","document_token":"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUb3B0cmFuc2xhdGlvbiBHbWJIIiwiaWF0IjoiMTUyOTQwMTM2NiIsImFwcF9pZCI6InBvbGx1eCIsImRvY3VtZW50X2lkIjoiNDJmNThjZTctOWJmZS00NjE1LTk1NTMtZjlkY2RiMzIzNmZmIiwiZXhwIjoxNTI5NTEzNjY2fQ.signature","download_url":"https://files.toptranslation.com/documents/42f58ce7-9bfe-4615-9553-f9dcdb3236ff/download?token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUb3B0cmFuc2xhdGlvbiBHbWJIIiwiaWF0IjoiMTUyOTQwMTM2NiIsImFwcF9pZCI6InBvbGx1eCIsImRvY3VtZW50X2lkIjoiNDJmNThjZTctOWJmZS00NjE1LTk1NTMtZjlkY2RiMzIzNmZmIiwiZXhwIjoxNTI5NTEzNjY2fQ.signature","parser_identifier":null},"meta":{"status":200,"message":"OK"}}'
+    http_version:
+  recorded_at: Sun, 31 Dec 2017 23:00:00 GMT
+recorded_with: VCR 4.0.0
