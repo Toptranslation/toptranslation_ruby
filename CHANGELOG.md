@@ -1,3 +1,12 @@
+<a name="v2.4.0"></a>
+### v2.4.0 (2018-06-21)
+
+
+#### Features
+
+* add sign_in! and access_token writer to Client	 ([f8d5ca1](/../../commit/f8d5ca1))
+
+
 <a name="v2.3.0"></a>
 ### v2.3.0 (2018-06-18)
 
