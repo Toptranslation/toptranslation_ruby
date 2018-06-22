@@ -19,5 +19,13 @@ module Toptranslation
     def locales(options = {})
       @locale_list ||= Resource::LocaleList.new(@connection, options)
     end
+
+    def sign_in!(options)
+      @connection.sign_in!(options)
+    end
+
+    def access_token=(token)
+      @connection.access_token = token
+    end
   end
 end

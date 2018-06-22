@@ -1,12 +1,13 @@
 module Toptranslation
   class Connection # rubocop:disable Metrics/ClassLength
-    attr_accessor :upload_token, :verbose
+    attr_accessor :upload_token, :verbose, :access_token
 
     def initialize(options = {})
       @base_url = options[:base_url] || 'https://api.toptranslation.com'
       @files_url = options[:files_url] || 'https://files.toptranslation.com'
-      @access_token = options[:access_token] || sign_in(options)
+      @access_token = options[:access_token]
       @verbose = options[:verbose] || false
+      sign_in!(options) if @access_token.nil? && options.values_at(:email, :password).all?
     end
 
     def get(path, options = {})
@@ -31,6 +32,21 @@ module Toptranslation
       uri = URI.parse("#{@files_url}/documents")
       file = File.new(filepath)
       upload_file(file, type, uri, &block)
+    end
+
+    def sign_in!(options)
+      return if @access_token
+      sign_in_options = {
+        email: options[:email],
+        password: options[:password],
+        application_id: 'pollux'
+      }.merge(options)
+
+      @access_token = post('/auth/sign_in', sign_in_options.merge(version: 2))['access_token']
+
+      puts "# Requested access token #{@access_token}" if @verbose
+
+      @access_token
     end
 
     private
@@ -58,20 +74,6 @@ module Toptranslation
         token = post('/upload_tokens')['upload_token']
         puts "# Upload-token retrieved: #{token}" if @verbose
         token
-      end
-
-      def sign_in(options)
-        sign_in_options = {
-          email: options[:email],
-          password: options[:password],
-          application_id: 'pollux'
-        }.merge!(options)
-
-        access_token = post('/auth/sign_in', sign_in_options)['access_token']
-
-        puts "# Requested access token #{access_token}" if @verbose
-
-        access_token
       end
 
       def transform_response(response, options)
