@@ -8,7 +8,7 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.default_cassette_options = {
-    match_requests_on: %i[method uri body],
+    match_requests_on: [:method, :uri, :body],
     allow_unused_http_interactions: false
   }
 end

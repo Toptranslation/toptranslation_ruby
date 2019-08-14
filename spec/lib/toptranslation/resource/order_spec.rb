@@ -3,7 +3,7 @@ RSpec.describe Toptranslation::Resource::Order do
   let(:connection) { instance_double(Toptranslation::Connection) }
 
   describe '#add_document' do
-    subject(:add_document) { order.add_document(42, 'abc', 'de', %w[fr cn]) }
+    subject(:add_document) { order.add_document(42, 'abc', 'de', ['fr', 'cn']) }
 
     let(:options) { { 'identifier' => 'foo' } }
     let(:response) { instance_double(Hash) }
@@ -14,7 +14,7 @@ RSpec.describe Toptranslation::Resource::Order do
         document_store_id: 42,
         document_token: 'abc',
         source_locale_code: 'de',
-        target_locale_codes: %w[fr cn]
+        target_locale_codes: ['fr', 'cn']
       }
     end
 
@@ -43,7 +43,7 @@ RSpec.describe Toptranslation::Resource::Order do
   end
 
   describe '#upload_document' do
-    subject(:upload_document) { order.upload_document('/file.pdf', 'de', %w[fr cn]) }
+    subject(:upload_document) { order.upload_document('/file.pdf', 'de', ['fr', 'cn']) }
 
     let(:options) { { 'identifier' => 'foo' } }
 
@@ -81,7 +81,7 @@ RSpec.describe Toptranslation::Resource::Order do
       upload_document
       expect(order)
         .to have_received(:add_document)
-        .with(42, 'abcdefg', 'de', %w[fr cn])
+        .with(42, 'abcdefg', 'de', ['fr', 'cn'])
     end
 
     it 'returns the document' do
