@@ -36,6 +36,7 @@ module Toptranslation
 
     def sign_in!(options)
       return if @access_token
+
       sign_in_options = {
         email: options[:email],
         password: options[:password],
@@ -89,7 +90,7 @@ module Toptranslation
       def prepare_request_options(options, method)
         request_options = options.dup
         request_options.delete(:version)
-        if %i[post patch].include? method
+        if [:post, :patch].include? method
           request_options.merge(auth_params)
         else
           params = options[:params] || {}
