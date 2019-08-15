@@ -1,3 +1,10 @@
+<a name="2.5.0"></a>
+### 2.5.0 (2019-08-15)
+
+#### Features
+
+* pass sha1 of documents and translations to user api	 ([52e2759](/../commit/52e2759))
+
 <a name="v2.4.0"></a>
 ### v2.4.0 (2018-06-21)
 
