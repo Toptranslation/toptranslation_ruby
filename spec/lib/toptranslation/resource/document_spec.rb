@@ -20,9 +20,11 @@ RSpec.describe Toptranslation::Resource::Document do
     instance_double(
       Toptranslation::Resource::Upload,
       document_store_id: 42,
-      document_token: 'abcdefg'
+      document_token: 'abcdefg',
+      sha1: '12345hash'
     )
   end
+
   let(:expected_attributes) do
     {
       identifier: 'abc',
@@ -60,7 +62,8 @@ RSpec.describe Toptranslation::Resource::Document do
       {
         document_store_id: upload.document_store_id,
         document_token: upload.document_token,
-        locale_code: 'de'
+        locale_code: 'de',
+        sha1: upload.sha1
       }
     end
 

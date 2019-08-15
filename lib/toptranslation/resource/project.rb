@@ -16,7 +16,8 @@ module Toptranslation::Resource
       attr_hash = {
         document_store_id: upload.document_store_id,
         document_token: upload.document_token,
-        locale_code: locale_code
+        locale_code: locale_code,
+        sha1: upload.sha1
       }
 
       attr_hash[:path] = options[:path] if options[:path]
