@@ -1,6 +1,6 @@
 module Toptranslation::Resource
   class Upload
-    attr_reader :document_store_id, :document_token
+    attr_reader :document_store_id, :document_token, :sha1
 
     def initialize(connection, options = {})
       @connection = connection
@@ -13,6 +13,7 @@ module Toptranslation::Resource
 
       @document_store_id = response['identifier']
       @document_token    = response['document_token']
+      @sha1              = response['sha1']
 
       self
     end

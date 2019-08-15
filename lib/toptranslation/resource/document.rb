@@ -14,7 +14,8 @@ module Toptranslation::Resource
       response = @connection.post("/documents/#{@identifier}/translations", options.merge(
                                                                               document_store_id: upload.document_store_id,
                                                                               document_token: upload.document_token,
-                                                                              locale_code: locale_code
+                                                                              locale_code: locale_code,
+                                                                              sha1: upload.sha1
                                                                             ))
     end
 
