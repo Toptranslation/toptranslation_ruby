@@ -14,7 +14,10 @@ module Toptranslation::Resource
     private
 
       def documents
-        @connection.get("/projects/#{@options[:project_identifier]}/documents", params: { per_page: 100 })
+        params = { per_page: 100 }
+        params[:type] = @options[:type] if @options[:type]
+
+        @connection.get("/projects/#{@options[:project_identifier]}/documents", params: params)
       end
   end
 end

@@ -28,8 +28,9 @@ module Toptranslation::Resource
       Document.new(@connection, response)
     end
 
-    def documents
-      ProjectDocumentList.new(@connection, project_identifier: @identifier)
+    def documents(options = {})
+      options.merge!(project_identifier: @identifier)
+      ProjectDocumentList.new(@connection, options)
     end
 
     def strings
