@@ -7,7 +7,7 @@ options = {}.tap do |o|
   o[:access_token] = ENV.fetch('ACCESS_TOKEN', 'change_me')
   o[:base_url] = ENV['BASE_URL'] if ENV['BASE_URL']
   o[:files_url] = ENV['FILES_URL'] if ENV['FILES_URL']
-  o[:verbose] = ENV['VERBOSE']
+  o[:verbose] = ENV.fetch('VERBOSE', nil)
 end
 
 client = Toptranslation::Client.new(options)

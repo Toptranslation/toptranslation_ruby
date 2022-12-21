@@ -1,5 +1,5 @@
 RSpec.describe Toptranslation::Resource::OrderList do
-  let(:order_list) { described_class.new(connection) }
+  let!(:order_list) { described_class.new(connection) }
   let(:connection) { instance_double(Toptranslation::Connection) }
 
   before do
@@ -72,12 +72,13 @@ RSpec.describe Toptranslation::Resource::OrderList do
     let(:order_b) { instance_double(Toptranslation::Resource::Order) }
 
     before do
-      allow(Toptranslation::Resource::Order).to receive(:new).with(connection, 'identifier' => 'a') { order_a }
-      allow(Toptranslation::Resource::Order).to receive(:new).with(connection, 'identifier' => 'b') { order_b }
+      allow(Toptranslation::Resource::Order).to receive(:new).with(connection, { 'identifier' => 'a' }) { order_a }
+      allow(Toptranslation::Resource::Order).to receive(:new).with(connection, { 'identifier' => 'b' }) { order_b }
     end
 
     it 'fetches all orders via orders API v2' do
-      order_list.each {}
+      order_list.each {} # rubocop:disable Lint/EmptyBlock
+
       expect(connection)
         .to have_received(:get)
         .with('/orders', version: 2)

@@ -1,5 +1,5 @@
 module Toptranslation
-  class Connection # rubocop:disable Metrics/ClassLength
+  class Connection
     attr_accessor :upload_token, :verbose, :access_token
 
     def initialize(options = {})
@@ -140,16 +140,9 @@ module Toptranslation
       end
 
       def upload_file(file, type, uri)
-        last_upload_size = 0
-
         response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
           request = Net::HTTP::Post.new(uri)
           request.set_form({ 'file' => file, 'token' => upload_token, 'type' => type }, 'multipart/form-data')
-
-          Net::HTTP::UploadProgress.new(request) do |progress|
-            yield progress.upload_size - last_upload_size if block_given?
-            last_upload_size = progress.upload_size
-          end
 
           http.request(request)
         end

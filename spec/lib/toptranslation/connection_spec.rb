@@ -190,34 +190,4 @@ RSpec.describe Toptranslation::Connection do
       expect(download).to be(file)
     end
   end
-
-  describe '#upload' do
-    subject(:upload) { connection.upload(file.path, 'document') }
-
-    let(:file) { File.open('test', 'w') }
-
-    before do
-      # Unfortunately webmock does not call readpartial on the request body_stream.
-      # It calls read instead which is not implemented for Net::HTTP::UploadProgress.
-      Net::HTTP::UploadProgress.send(:define_method, :read) do
-        @io.read # rubocop:disable RSpec/InstanceVariable
-      end
-
-      # Deterministic multipart boundary. Otherwise the upload request's body will
-      # be different every time
-      allow(SecureRandom).to receive(:urlsafe_base64).with(40).and_return('a' * 53)
-
-      file << 'TEST DATA'
-      file.flush
-    end
-
-    after do
-      file.close
-      FileUtils.rm_f(file.path)
-    end
-
-    it 'uploads the file', vcr: true do
-      upload
-    end
-  end
 end

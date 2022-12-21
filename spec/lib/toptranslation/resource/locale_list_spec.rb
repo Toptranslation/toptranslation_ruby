@@ -21,7 +21,7 @@ RSpec.describe Toptranslation::Resource::LocaleList do
 
     it 'returns a Locale built from the result' do
       locale = instance_double(Toptranslation::Resource::Locale)
-      allow(Toptranslation::Resource::Locale).to receive(:new).with('code' => 'de') { locale }
+      allow(Toptranslation::Resource::Locale).to receive(:new).with({ 'code' => 'de' }) { locale }
       expect(find).to be(locale)
     end
 
@@ -35,8 +35,8 @@ RSpec.describe Toptranslation::Resource::LocaleList do
     let(:locale_fr) { instance_double(Toptranslation::Resource::Locale) }
 
     before do
-      allow(Toptranslation::Resource::Locale).to receive(:new).with('code' => 'de') { locale_de }
-      allow(Toptranslation::Resource::Locale).to receive(:new).with('code' => 'fr') { locale_fr }
+      allow(Toptranslation::Resource::Locale).to receive(:new).with({ 'code' => 'de' }) { locale_de }
+      allow(Toptranslation::Resource::Locale).to receive(:new).with({ 'code' => 'fr' }) { locale_fr }
     end
 
     it 'yields all locales' do

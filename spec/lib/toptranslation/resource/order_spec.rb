@@ -127,12 +127,13 @@ RSpec.describe Toptranslation::Resource::Order do
       }
     end
 
-    let(:quote_foo) { instance_double(Toptranslation::Resource::Quote) }
-    let(:quote_bar) { instance_double(Toptranslation::Resource::Quote) }
+    let(:quote_foo) { instance_double(Toptranslation::Resource::Quote, identifier: 'foo') }
+    let(:quote_bar) { instance_double(Toptranslation::Resource::Quote, identifier: 'bar') }
 
     it 'maps the quotes from the options to Quote resources and returns them' do
-      allow(Toptranslation::Resource::Quote).to receive(:new).with(connection, 'identifier' => 'quote_foo') { quote_foo }
-      allow(Toptranslation::Resource::Quote).to receive(:new).with(connection, 'identifier' => 'quote_bar') { quote_bar }
+      allow(Toptranslation::Resource::Quote).to receive(:new).with(connection, { 'identifier' => 'quote_foo' }).and_return(quote_foo)
+      allow(Toptranslation::Resource::Quote).to receive(:new).with(connection, { 'identifier' => 'quote_bar' }).and_return(quote_bar)
+
       expect(quotes).to eq([quote_foo, quote_bar])
     end
   end
@@ -162,7 +163,7 @@ RSpec.describe Toptranslation::Resource::Order do
     it 'creates a user from the options hash and returns it' do
       allow(Toptranslation::Resource::User)
         .to receive(:new)
-        .with(connection, 'identifier' => 'creator_id')
+        .with(connection, { 'identifier' => 'creator_id' })
         .and_return(user)
       expect(creator).to be(user)
     end
