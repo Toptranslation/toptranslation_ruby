@@ -1,3 +1,15 @@
+<a name="3.0.0"></a>
+### 3.0.0 (2022-12-21)
+
+#### Features
+
+* allow for parameters to project documents list	 ([ba7783c](/../commit/ba7783c))
+
+#### Maintain
+
+* update ruby to 3.1.3 and gems	 ([098d7bd](/../commit/098d7bd))
+* use ruby 2.6.3	 ([c6c9f97](/../commit/c6c9f97))
+
 <a name="2.5.0"></a>
 ### 2.5.0 (2019-08-15)
 
