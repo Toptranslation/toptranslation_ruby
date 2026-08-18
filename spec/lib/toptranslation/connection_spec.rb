@@ -126,6 +126,19 @@ RSpec.describe Toptranslation::Connection do
     end
   end
 
+
+  describe '#sign_in!' do
+    it 'raises with guidance — email/password sign-in was removed from the API' do
+      expect { connection.sign_in!(email: 'a@b.c', password: 'secret') }
+        .to raise_error(Toptranslation::SignInRemovedError, /static access\s?token/i)
+    end
+
+    it 'also raises when initializing with email and password' do
+      expect { described_class.new(email: 'a@b.c', password: 'secret') }
+        .to raise_error(Toptranslation::SignInRemovedError)
+    end
+  end
+
   describe '#download' do
     subject(:download) { connection.download(url, path) }
 

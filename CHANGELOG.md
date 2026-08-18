@@ -1,3 +1,13 @@
+<a name="4.0.1"></a>
+### 4.0.1 (2026-08-18)
+
+#### Breaking Changes
+
+* `sign_in!` (email/password) now raises `Toptranslation::SignInRemovedError`
+  with guidance — the API removed `POST /v2/auth/sign_in` (authentication
+  moved to the Toptranslation auth service). Initialize the client with a
+  static access token: `Toptranslation.new(access_token: '...')`.
+
 <a name="4.0.0"></a>
 ### 4.0.0 (2026-08-18)
 

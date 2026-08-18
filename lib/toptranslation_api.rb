@@ -20,6 +20,11 @@ require 'toptranslation/resource/upload'
 require 'toptranslation/resource/user'
 
 module Toptranslation
+  # Raised when the removed email/password sign-in is used — the API only
+  # accepts static access tokens since authentication moved to the
+  # Toptranslation auth service.
+  class SignInRemovedError < StandardError; end
+
   def self.new(options)
     Toptranslation::Client.new(options)
   end

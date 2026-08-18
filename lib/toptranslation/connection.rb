@@ -38,20 +38,16 @@ module Toptranslation
       upload_file(file, uri, &block)
     end
 
-    def sign_in!(options)
-      return if @access_token
-
-      sign_in_options = {
-        email: options[:email],
-        password: options[:password],
-        application_id: 'pollux'
-      }.merge(options)
-
-      @access_token = post('/auth/sign_in', sign_in_options)['access_token']
-
-      puts "# Requested access token #{@access_token}" if @verbose
-
-      @access_token
+    # @deprecated Email/password sign-in was removed from the Toptranslation
+    #   API (authentication moved to the auth service) — the endpoint this
+    #   method used no longer exists. Initialize the client with a static
+    #   access token instead.
+    def sign_in!(_options = {})
+      raise Toptranslation::SignInRemovedError,
+            'sign_in! with email/password is no longer supported: the Toptranslation API ' \
+            'removed POST /v2/auth/sign_in. Initialize the client with a static access ' \
+            "token instead: Toptranslation.new(access_token: '...'). Contact " \
+            'support@toptranslation.com to obtain a token.'
     end
 
     private
