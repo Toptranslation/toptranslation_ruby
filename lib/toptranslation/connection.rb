@@ -1,6 +1,8 @@
 module Toptranslation
   class Connection
-    attr_accessor :upload_token, :verbose, :access_token
+    attr_accessor :verbose, :access_token
+
+    API_VERSION = 'v2'.freeze
 
     def initialize(options = {})
       @base_url = options[:base_url] || 'https://api.toptranslation.com'
@@ -11,15 +13,15 @@ module Toptranslation
     end
 
     def get(path, options = {})
-      transform_response(request(:get, path, options), options)
+      transform_response(request(:get, path, options))
     end
 
     def post(path, options = {})
-      transform_response(request(:post, path, options), options)
+      transform_response(request(:post, path, options))
     end
 
     def patch(path, options = {})
-      transform_response(request(:patch, path, options), options)
+      transform_response(request(:patch, path, options))
     end
 
     def download(url, path, &block)
@@ -28,10 +30,12 @@ module Toptranslation
       download_uri(uri, path, &block)
     end
 
-    def upload(filepath, type, &block)
-      uri = URI.parse("#{@files_url}/documents")
+    # Uploads go directly to the document store (castor): the response
+    # carries the document token that authorizes further use of the file.
+    def upload(filepath, _type = 'document', &block)
+      uri = URI.parse("#{@files_url}/v2/documents")
       file = File.new(filepath)
-      upload_file(file, type, uri, &block)
+      upload_file(file, uri, &block)
     end
 
     def sign_in!(options)
@@ -43,7 +47,7 @@ module Toptranslation
         application_id: 'pollux'
       }.merge(options)
 
-      @access_token = post('/auth/sign_in', sign_in_options.merge(version: 2))['access_token']
+      @access_token = post('/auth/sign_in', sign_in_options)['access_token']
 
       puts "# Requested access token #{@access_token}" if @verbose
 
@@ -52,12 +56,8 @@ module Toptranslation
 
     private
 
-      def version(options)
-        options[:version] || 0
-      end
-
       def request(method, path, options)
-        url = "#{@base_url}/v#{version(options)}#{path}"
+        url = "#{@base_url}/#{API_VERSION}#{path}"
         puts "# #{method}-request #{url}" if @verbose
         puts "options: #{prepare_request_options(options, method)}" if @verbose
         RestClient.send(method, url, prepare_request_options(options, method))
@@ -66,30 +66,13 @@ module Toptranslation
         raise e
       end
 
-      def upload_token
-        @upload_token ||= request_upload_token
-      end
-
-      def request_upload_token
-        puts '# Requesting upload-token' if @verbose
-        token = post('/upload_tokens')['upload_token']
-        puts "# Upload-token retrieved: #{token}" if @verbose
-        token
-      end
-
-      def transform_response(response, options)
+      def transform_response(response)
         puts response if @verbose
-        parsed = JSON.parse(response)
-        if version(options) == 2
-          parsed
-        else
-          parsed['data']
-        end
+        JSON.parse(response)
       end
 
       def prepare_request_options(options, method)
         request_options = options.dup
-        request_options.delete(:version)
         if [:post, :patch].include? method
           request_options.merge(auth_params)
         else
@@ -139,15 +122,17 @@ module Toptranslation
         end
       end
 
-      def upload_file(file, type, uri)
+      def upload_file(file, uri)
         response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
           request = Net::HTTP::Post.new(uri)
-          request.set_form({ 'file' => file, 'token' => upload_token, 'type' => type }, 'multipart/form-data')
+          # stable per upload (not per attempt): the document store recognizes
+          # retries and returns the already created document instead of a duplicate
+          request.set_form({ 'file' => file, 'idempotency_key' => SecureRandom.uuid }, 'multipart/form-data')
 
           http.request(request)
         end
 
-        transform_response(response.body, version: 0)
+        transform_response(response.body)
       end
   end
 end

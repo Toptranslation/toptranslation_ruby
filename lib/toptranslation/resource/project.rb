@@ -33,10 +33,6 @@ module Toptranslation::Resource
       ProjectDocumentList.new(@connection, options)
     end
 
-    def strings
-      StringList.new(@connection, project_identifier: @identifier)
-    end
-
     def save
       response = @identifier ? update_remote_project : create_remote_project
       update_and_return_from_response(response)
@@ -62,11 +58,13 @@ module Toptranslation::Resource
       def update_from_response(response)
         @identifier = response['identifier'] if response['identifier']
         @created_at = DateTime.parse(response['created_at']) if response['created_at']
-        @locales = response['locales'].inject([]) do |accu, locale_data|
+        @locales = Array(response['locales']).inject([]) do |accu, locale_data|
           locale = Locale.new(locale_data)
           @source_locale = locale if locale_data['is_source_locale'] # Set source locale of the project
           accu << locale
         end
+        # API v2 liefert die Ausgangssprache zusätzlich als eigenes Feld
+        @source_locale = Locale.new(response['source_locale']) if response['source_locale']
         @name = response['name'] if response['name']
       end
 

@@ -8,17 +8,6 @@ module Toptranslation::Resource
       update_from_response(options)
     end
 
-    def add_translation(filepath, locale_code, options = {})
-      upload = Upload.new(@connection).upload(filepath)
-
-      response = @connection.post("/documents/#{@identifier}/translations", options.merge(
-                                                                              document_store_id: upload.document_store_id,
-                                                                              document_token: upload.document_token,
-                                                                              locale_code: locale_code,
-                                                                              sha1: upload.sha1
-                                                                            ))
-    end
-
     def download_url(locale_code, options = {})
       params = { file_format: options[:file_format], locale_code: locale_code }.compact
       @connection.get("/documents/#{@identifier}/download", params: params)['download_url']
@@ -36,23 +25,7 @@ module Toptranslation::Resource
       @connection.download(download_url(locale_code, options), download_path, &block)
     end
 
-    def save
-      response = @connection.patch("/documents/#{@identifier}", remote_hash)
-      update_and_return_from_response(response)
-    end
-
-    def strings
-      StringList.new(@connection, document_identifier: @identifier)
-    end
-
     private
-
-      def update_and_return_from_response(response)
-        if response
-          update_from_response(response)
-          self
-        end
-      end
 
       def update_from_response(response)
         @identifier = response['identifier'] if response['identifier']
@@ -70,10 +43,5 @@ module Toptranslation::Resource
         end
       end
 
-      def remote_hash
-        hash = {}
-        hash[:name] = @name if @name
-        hash
-      end
   end
 end

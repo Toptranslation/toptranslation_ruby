@@ -19,7 +19,7 @@ module Toptranslation::Resource
     private
 
       def translations
-        @connection.get("/orders/#{@options[:order_identifier]}/translations") if @options[:order_identifier]
+        @connection.get('/translations', params: { order_identifier: @options[:order_identifier] }) if @options[:order_identifier]
       end
   end
 end

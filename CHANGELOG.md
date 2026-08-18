@@ -1,3 +1,23 @@
+<a name="4.0.0"></a>
+### 4.0.0 (2026-08-18)
+
+#### Breaking Changes
+
+The client now talks exclusively to Toptranslation API **v2** — API v0 is
+being removed from the backend.
+
+* file uploads go directly to the document store (`{files_url}/v2/documents`,
+  idempotent) — the `/upload_tokens` roundtrip is gone
+* `project.documents.find(identifier)` is now scoped to the project
+  (`GET /v2/projects/:id/documents/:identifier`)
+* `order.translations` uses `GET /v2/translations?order_identifier=…`
+* removed without replacement (no v2 endpoint, dead against the current
+  backend for years): `Document#add_translation`, `Document#save`,
+  `DocumentList#find` (unscoped), all string resources
+  (`Project#strings`, `Document#strings`, `StringList`, `String`)
+* requires the backend deployment of 2026-08-18 or later
+  (`/v2/projects/:id/documents/batch`, `/v2/translations`)
+
 <a name="3.0.0"></a>
 ### 3.0.0 (2022-12-21)
 

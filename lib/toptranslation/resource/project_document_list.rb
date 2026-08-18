@@ -1,5 +1,11 @@
 module Toptranslation::Resource
   class ProjectDocumentList < DocumentList
+    # projektbezogener Lookup — API v2 kennt kein unscoped GET /documents/:id
+    def find(identifier)
+      result = @connection.get("/projects/#{@options[:project_identifier]}/documents/#{identifier}")
+      Document.new(@connection, result)
+    end
+
     def create(name, path, options = {})
       response = @connection.post("/projects/#{@options[:project_identifier]}/documents", options.merge(name: name, path: path))
       Document.new(@connection, response)

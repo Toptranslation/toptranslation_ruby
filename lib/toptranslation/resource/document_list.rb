@@ -7,11 +7,6 @@ module Toptranslation::Resource
       @options = options
     end
 
-    def find(identifier)
-      result = @connection.get("/documents/#{identifier}")
-      Document.new(@connection, result)
-    end
-
     def each
       documents.each { |document| yield Document.new(@connection, document) }
     end

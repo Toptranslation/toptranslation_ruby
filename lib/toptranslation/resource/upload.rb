@@ -12,7 +12,8 @@ module Toptranslation::Resource
       response = @connection.upload(filepath, type, &block)
 
       @document_store_id = response['identifier']
-      @document_token    = response['document_token']
+      # Document-Store v2 nennt das Feld token
+      @document_token    = response['token'] || response['document_token']
       @sha1              = response['sha1']
 
       self
