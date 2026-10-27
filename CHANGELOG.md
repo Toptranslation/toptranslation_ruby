@@ -1,3 +1,18 @@
+<a name="4.1.0"></a>
+### 4.1.0 (2026-10-27)
+
+#### Features
+
+* uploads now use the `attach_token` returned by the document store. It stays
+  valid for attaching a document to an order or project much longer than the
+  former 1-hour `token`. Falls back to `token` / `document_token` against
+  older document stores, so the change is backward compatible.
+
+**Update recommended:** integrations that wait a long time between uploading
+a file and attaching it (`Order#add_document`, `Project#upload_document`)
+benefit from the longer window. The old short-lived `token` is being phased
+out, so please update to 4.1.0 or later.
+
 <a name="4.0.1"></a>
 ### 4.0.1 (2026-08-18)
 
