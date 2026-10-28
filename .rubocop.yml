@@ -2,5 +2,16 @@ inherit_from:
   - https://raw.githubusercontent.com/tt-laboratories/dotfiles/master/.rubocop.yml
   - .rubocop_todo.yml
 
+# Die geteilte Config lädt nur rubocop-rspec, konfiguriert aber FactoryBot-Cops,
+# die seit rubocop-rspec 3 im eigenen Plugin stecken
+plugins:
+  - rubocop-rspec
+  - rubocop-factory_bot
+
 AllCops:
   TargetRubyVersion: 3.0
+  SuggestExtensions: false
+
+# Entwicklungsabhängigkeiten stehen bewusst im gemspec
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec

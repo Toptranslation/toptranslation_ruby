@@ -40,8 +40,8 @@ RSpec.describe Toptranslation::Client do
     end
   end
 
-  include_examples 'list resource', 'orders', 'OrderList'
-  include_examples 'list resource', 'translations', 'TranslationList'
-  include_examples 'list resource', 'projects', 'ProjectList'
-  include_examples 'list resource', 'locales', 'LocaleList'
+  it_behaves_like 'list resource', 'orders', 'OrderList'
+  it_behaves_like 'list resource', 'translations', 'TranslationList'
+  it_behaves_like 'list resource', 'projects', 'ProjectList'
+  it_behaves_like 'list resource', 'locales', 'LocaleList'
 end

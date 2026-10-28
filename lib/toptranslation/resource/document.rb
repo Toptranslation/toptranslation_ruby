@@ -42,6 +42,5 @@ module Toptranslation::Resource
           end
         end
       end
-
   end
 end

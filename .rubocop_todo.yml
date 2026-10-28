@@ -27,13 +27,13 @@ Metrics/CyclomaticComplexity:
 # Offense count: 9
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
-Metrics/LineLength:
+Layout/LineLength:
   Max: 153
 
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 13
+  Max: 14
 
 # Offense count: 5
 Metrics/PerceivedComplexity:
@@ -67,3 +67,11 @@ Style/GuardClause:
     - 'lib/toptranslation/resource/order.rb'
     - 'lib/toptranslation/resource/project.rb'
     - 'lib/toptranslation/resource/string.rb'
+
+# Offense count: 7
+RSpec/MultipleExpectations:
+  Max: 4
+
+# Offense count: 3
+RSpec/ExampleLength:
+  Max: 6
