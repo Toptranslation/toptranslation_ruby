@@ -12,8 +12,9 @@ module Toptranslation::Resource
       response = @connection.upload(filepath, type, &block)
 
       @document_store_id = response['identifier']
-      # Document-Store v2 nennt das Feld token
-      @document_token    = response['token'] || response['document_token']
+      # attach_token hat eine längere Anhänge-Frist als token (1 h); ältere
+      # Document-Stores liefern nur token bzw. document_token
+      @document_token    = response['attach_token'] || response['token'] || response['document_token']
       @sha1              = response['sha1']
 
       self
