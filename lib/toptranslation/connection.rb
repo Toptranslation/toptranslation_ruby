@@ -107,14 +107,17 @@ module Toptranslation
           yield nil, total if block_given?
 
           FileUtils.mkpath(File.dirname(path))
-          file = File.open(path, 'w')
-          http.request_get(uri.request_uri) do |response|
-            response.read_body do |data|
-              file.write(data)
-              yield data.length, total if block_given?
+          # Block-Form schließt die Datei, damit der Inhalt vollständig auf der
+          # Platte liegt; zurück kommt wie bisher das File-Objekt
+          File.open(path, 'w') do |file|
+            http.request_get(uri.request_uri) do |response|
+              response.read_body do |data|
+                file.write(data)
+                yield data.length, total if block_given?
+              end
             end
+            file
           end
-          file
         end
       end
 

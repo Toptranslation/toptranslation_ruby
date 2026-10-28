@@ -126,7 +126,6 @@ RSpec.describe Toptranslation::Connection do
     end
   end
 
-
   describe '#sign_in!' do
     it 'raises with guidance — email/password sign-in was removed from the API' do
       expect { connection.sign_in!(email: 'a@b.c', password: 'secret') }
@@ -151,7 +150,7 @@ RSpec.describe Toptranslation::Connection do
     let(:data) { 'data' }
 
     before do
-      allow(File).to receive(:open) { file }
+      allow(File).to receive(:open).and_yield(file)
       allow(file).to receive(:write)
       allow(Net::HTTP).to receive(:start).and_yield(http)
       allow(http).to receive(:request_get).and_yield(response)

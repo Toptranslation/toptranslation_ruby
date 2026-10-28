@@ -1,5 +1,5 @@
 <a name="4.1.0"></a>
-### 4.1.0 (2026-10-27)
+### 4.1.0 (2026-10-28)
 
 #### Features
 
@@ -12,6 +12,12 @@
 a file and attaching it (`Order#add_document`, `Project#upload_document`)
 benefit from the longer window. The old short-lived `token` is being phased
 out, so please update to 4.1.0 or later.
+
+#### Bug Fixes
+
+* `Document#download`, `Translation#download` and `ReferenceDocument#download`
+  close the downloaded file before returning it, so its content is completely
+  written to disk. Before, the returned `File` stayed open for writing.
 
 <a name="4.0.1"></a>
 ### 4.0.1 (2026-08-18)
