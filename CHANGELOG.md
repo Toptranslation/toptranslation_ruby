@@ -1,3 +1,21 @@
+<a name="4.2.0"></a>
+### 4.2.0 (2026-10-28)
+
+#### Features
+
+* **upload**
+  * use attach_token from the document store response (4.1.0)	 ([9bff136](/../commit/9bff136))
+
+#### Bug Fixes
+
+* **download**
+  * close the downloaded file before returning it	 ([4a80a15](/../commit/4a80a15))
+
+#### Maintain
+
+* **dev**
+  * make specs and rubocop run on Ruby 4	 ([e0572de](/../commit/e0572de))
+
 <a name="4.1.0"></a>
 ### 4.1.0 (2026-10-28)
 
@@ -128,5 +146,3 @@ being removed from the backend.
 
 * reraise RestClient exception	 ([c1df09d](/../../commit/c1df09d))
 * fix all resources that have not been migrated to v2 yet	 ([0d1b130](/../../commit/0d1b130))
-
-
